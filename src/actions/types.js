@@ -1,0 +1,9 @@
+export const GET_POSTS = 'GET_POST';
+export const SET_LOADING = 'SET_LOADING';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAIL = 'REGISTER_FAIL';
+export const DELETE_NOTIFICATION = 'DELETE_NOTIFICATION';
+export const DELETE_ALERT = 'DELETE_ALERT';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const SET_ALERT = 'SET_ALERT';
