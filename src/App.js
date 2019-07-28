@@ -9,6 +9,10 @@ import Login from './components/auth/Login';
 import Post from './components/posts/Post';
 import Notification from './components/layouts/Notification';
 import Alert from './components/layouts/Alert';
+import PostForm from './components/posts/PostForm';
+import PrivateRoute from './components/routing/PrivateRoute';
+import UserPosts from './components/posts/UserPosts';
+import EditForm from './components/posts/EditForm';
 
 const App = () => {
   return (
@@ -22,7 +26,10 @@ const App = () => {
             <Route exact path='/' component={Home} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
-            <Route exact path='/posts' component={Post} />
+            <PrivateRoute exact path='/createPost' component={PostForm} />
+            <PrivateRoute exact path='/myPosts' component={UserPosts} />
+            <PrivateRoute exact path='/editPost' component={EditForm} />
+            <Route exact path='/posts/:id' component={Post} />
           </Switch>
         </div>
       </Router>

@@ -1,28 +1,34 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logout } from '../../actions/authActions';
 
-const Navbar = () => {
+const Navbar = ({ auth: { isAuthenticated }, logout }) => {
+  const logoutUser = () => {
+    logout();
+  };
+
   const authLinks = (
     <Fragment>
       <li className='nav-item'>
-        <Link to='/' className='nav-link'>
+        <Link to='/myPosts' className='nav-link'>
           My Posts
         </Link>
       </li>
       <li className='nav-item'>
-        <Link to='/' className='nav-link'>
+        <Link to='/createPost' className='nav-link'>
           Create Post
         </Link>
       </li>
     </Fragment>
   );
 
-  const logout = (
+  const logoutLink = (
     <ul className='nav bg-light p-3'>
       <li className='nav-item'>
-        <Link to='/' className='nav-link'>
+        <button className='btn btn-link' onClick={logoutUser}>
           Logout
-        </Link>
+        </button>
       </li>
     </ul>
   );
@@ -42,8 +48,6 @@ const Navbar = () => {
     </ul>
   );
 
-  const authenticated = false;
-
   return (
     <nav className='navbar navbar-light bg-light justify-content-between'>
       <ul className='nav bg-light p-3'>
@@ -52,11 +56,18 @@ const Navbar = () => {
             Home
           </Link>
         </li>
-        {authenticated && authLinks}
+        {isAuthenticated && authLinks}
       </ul>
-      {authenticated ? logout : guestLinks}
+      {isAuthenticated ? logoutLink : guestLinks}
     </nav>
   );
 };
 
-export default Navbar;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logout }
+)(Navbar);

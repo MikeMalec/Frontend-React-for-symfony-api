@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { login, setAlert } from '../../actions/authActions';
+import { login } from '../../actions/authActions';
+import { setAlert } from '../../actions/alertActions';
 
 const Login = ({ auth: { isAuthenticated }, login, setAlert, history }) => {
   const [user, setUser] = useState({

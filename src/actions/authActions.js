@@ -1,13 +1,12 @@
 import {
   REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  DELETE_NOTIFICATION,
-  DELETE_ALERT,
   LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  SET_ALERT
+  SET_ALERT,
+  SET_NOTIFICATION,
+  LOGOUT
 } from './types';
 import axios from 'axios';
+import { clearAlert } from '../actions/alertActions';
 
 export const register = formData => async dispatch => {
   const config = {
@@ -17,13 +16,13 @@ export const register = formData => async dispatch => {
   };
 
   try {
-    const res = await axios.post('http://api.test/register', formData, config);
+    const res = await axios.post('/register', formData, config);
 
     dispatch({ type: REGISTER_SUCCESS, payload: res.data });
-    deleteNotification(dispatch);
+    dispatch({ type: SET_NOTIFICATION, payload: res.data.message });
   } catch (error) {
-    dispatch({ type: REGISTER_FAIL, payload: error.response.data });
-    deleteAlert(dispatch);
+    dispatch({ type: SET_ALERT, payload: error.response.data.title });
+    clearAlert(dispatch);
   }
 };
 
@@ -34,27 +33,16 @@ export const login = formData => async dispatch => {
     }
   };
   try {
-    const res = await axios.post('http://api.test/login', formData, config);
+    const res = await axios.post('/login', formData, config);
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
   } catch (error) {
-    dispatch({ type: LOGIN_FAILURE, payload: error.response.data });
-    deleteAlert(dispatch);
+    dispatch({ type: SET_ALERT, payload: error.response.data.message });
+    clearAlert(dispatch);
   }
 };
 
-export const setAlert = message => async dispatch => {
-  dispatch({ type: SET_ALERT, payload: message });
-  deleteAlert(dispatch);
-};
-
-export const deleteNotification = dispatch => {
-  setTimeout(() => {
-    dispatch({ type: DELETE_NOTIFICATION });
-  }, 1000);
-};
-
-export const deleteAlert = dispatch => {
-  setTimeout(() => {
-    dispatch({ type: DELETE_ALERT });
-  }, 1000);
+export const logout = () => {
+  return {
+    type: LOGOUT
+  };
 };

@@ -1,31 +1,25 @@
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  DELETE_NOTIFICATION,
-  DELETE_ALERT,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  SET_ALERT
+  LOGOUT
 } from '../actions/types';
 
 const initialState = {
   token: localStorage.getItem('token'),
-  isAuthenticated: null,
-  notification: null,
-  alert: null
+  isAuthenticated: null
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case REGISTER_SUCCESS:
       return {
-        ...state,
-        notification: action.payload.message
+        ...state
       };
     case REGISTER_FAIL:
       return {
-        ...state,
-        alert: action.payload.title
+        ...state
       };
     case LOGIN_SUCCESS: {
       localStorage.setItem('token', action.payload.token);
@@ -36,26 +30,14 @@ export default (state = initialState, action) => {
     }
     case LOGIN_FAILURE: {
       return {
-        ...state,
-        alert: action.payload.message
+        ...state
       };
     }
-    case DELETE_NOTIFICATION: {
+    case LOGOUT: {
+      localStorage.removeItem('token');
       return {
         ...state,
-        notification: null
-      };
-    }
-    case SET_ALERT: {
-      return {
-        ...state,
-        alert: action.payload
-      };
-    }
-    case DELETE_ALERT: {
-      return {
-        ...state,
-        alert: null
+        isAuthenticated: null
       };
     }
     default:

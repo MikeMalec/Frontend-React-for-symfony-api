@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
-import PostItem from './PostItem';
+import { connect } from 'react-redux';
 
-const Posts = () => {
-  return (
-    <Fragment>
-      <PostItem />
-    </Fragment>
-  );
+const Posts = ({ posts: { post } }) => {
+  return <Fragment />;
 };
 
-export default Posts;
+const mapStateToProps = state => ({
+  posts: state.posts
+});
+
+export default connect(mapStateToProps)(Posts);

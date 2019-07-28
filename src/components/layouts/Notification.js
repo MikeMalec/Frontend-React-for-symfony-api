@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 
-const Notification = ({ auth: { notification } }) => {
+const Notification = ({ notification: { notification } }) => {
   return (
     <Fragment>
       {notification ? (
@@ -14,7 +14,7 @@ const Notification = ({ auth: { notification } }) => {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  notification: state.notification
 });
 
 export default connect(mapStateToProps)(Notification);

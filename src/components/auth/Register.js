@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { register, setAlert } from '../../actions/authActions';
+import { register } from '../../actions/authActions';
+import { setAlert } from '../../actions/alertActions';
 
 const Register = ({
   auth: { isAuthenticated },
