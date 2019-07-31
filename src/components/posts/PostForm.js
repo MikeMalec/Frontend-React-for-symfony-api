@@ -5,8 +5,6 @@ import { updatePost } from '../../actions/postActions';
 import { setAlert } from '../../actions/alertActions';
 
 const PostForm = ({ posts: { created }, createPost, history, setAlert }) => {
-  const [file, setFile] = useState(null);
-
   const [post, setPost] = useState({
     title: '',
     category: 'Web Development',
@@ -31,7 +29,7 @@ const PostForm = ({ posts: { created }, createPost, history, setAlert }) => {
     const file = e.target.files[0];
     const fileReader = new FileReader();
     fileReader.onload = () => {
-      setFile(fileReader.result);
+      setPost({ ...post, thumbnail: fileReader.result });
     };
     fileReader.readAsDataURL(file);
   };
@@ -41,18 +39,7 @@ const PostForm = ({ posts: { created }, createPost, history, setAlert }) => {
     if (title === '' || category === '' || body === '') {
       setAlert('Please fill in all fields');
     } else {
-      if (file) {
-        const postWithThumbnail = {
-          title: title,
-          category: category,
-          body: body,
-          video: video,
-          thumbnail: file
-        };
-        createPost(postWithThumbnail);
-      } else {
-        createPost(post);
-      }
+      createPost(post);
     }
   };
 

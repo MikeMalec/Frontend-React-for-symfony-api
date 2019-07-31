@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { register } from '../../actions/authActions';
 import { setAlert } from '../../actions/alertActions';
+import Spinner from '../layouts/Spinner';
 
 const Register = ({
   auth: { isAuthenticated },
   register,
   setAlert,
-  history
+  history,
+  loading
 }) => {
   const [user, setUser] = useState({
     email: '',
@@ -39,71 +41,75 @@ const Register = ({
     }
   };
 
-  return (
-    <div className='d-flex justify-content-center'>
-      <div className='w-100'>
-        <h1 className='text-center mt-5'>Account Register</h1>
-        <form className='mt-1 bg-light p-5' onSubmit={onSubmit}>
-          <div className='form-group'>
-            <label htmlFor='email'>Email address</label>
-            <input
-              type='email'
-              className='form-control'
-              name='email'
-              placeholder='Enter email'
-              value={email}
-              onChange={onChange}
-            />
-          </div>
-          <div className='form-group'>
-            <label htmlFor='firstName'>First Name</label>
-            <input
-              type='text'
-              className='form-control'
-              name='firstName'
-              placeholder='Enter first name'
-              value={firstName}
-              onChange={onChange}
-            />
-            <small className='form-text text-muted'>
-              <p className='text-primary'>Use at least 2 characters</p>
-            </small>
-          </div>
-          <div className='form-group'>
-            <label htmlFor='surname'>Surname</label>
-            <input
-              type='text'
-              className='form-control'
-              name='surname'
-              placeholder='Enter surname'
-              value={surname}
-              onChange={onChange}
-            />
-            <small className='form-text text-muted'>
-              <p className='text-primary'>Use at least 2 characters</p>
-            </small>
-          </div>
-          <div className='form-group'>
-            <label htmlFor='password'>Password</label>
-            <input
-              type='password'
-              className='form-control'
-              name='password'
-              placeholder='Enter password'
-              value={password}
-              onChange={onChange}
-            />
-            <small className='form-text text-muted'>
-              <p className='text-primary'>Use at least 6 characters</p>
-            </small>
-          </div>
-          <button type='submit' className='btn btn-primary'>
-            Register
-          </button>
-        </form>
+  if (loading) {
+    return <Spinner />;
+  } else {
+    return (
+      <div className='d-flex justify-content-center'>
+        <div className='w-100'>
+          <h1 className='text-center mt-5'>Account Register</h1>
+          <form className='mt-1 bg-light p-5' onSubmit={onSubmit}>
+            <div className='form-group'>
+              <label htmlFor='email'>Email address</label>
+              <input
+                type='email'
+                className='form-control'
+                name='email'
+                placeholder='Enter email'
+                value={email}
+                onChange={onChange}
+              />
+            </div>
+            <div className='form-group'>
+              <label htmlFor='firstName'>First Name</label>
+              <input
+                type='text'
+                className='form-control'
+                name='firstName'
+                placeholder='Enter first name'
+                value={firstName}
+                onChange={onChange}
+              />
+              <small className='form-text text-muted'>
+                <p className='text-primary'>Use at least 2 characters</p>
+              </small>
+            </div>
+            <div className='form-group'>
+              <label htmlFor='surname'>Surname</label>
+              <input
+                type='text'
+                className='form-control'
+                name='surname'
+                placeholder='Enter surname'
+                value={surname}
+                onChange={onChange}
+              />
+              <small className='form-text text-muted'>
+                <p className='text-primary'>Use at least 2 characters</p>
+              </small>
+            </div>
+            <div className='form-group'>
+              <label htmlFor='password'>Password</label>
+              <input
+                type='password'
+                className='form-control'
+                name='password'
+                placeholder='Enter password'
+                value={password}
+                onChange={onChange}
+              />
+              <small className='form-text text-muted'>
+                <p className='text-primary'>Use at least 6 characters</p>
+              </small>
+            </div>
+            <button type='submit' className='btn btn-primary'>
+              Register
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 Register.propTypes = {
@@ -112,7 +118,8 @@ Register.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  loading: state.loading.loading
 });
 
 export default connect(

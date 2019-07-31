@@ -5,7 +5,10 @@ import {
   DELETE_POST,
   GET_POST,
   UPDATE_POST,
-  SET_POST
+  SET_POST,
+  UNSET_CURRENT_POST,
+  GET_POSTS,
+  GET_FILTERED_POSTS
 } from '../actions/types';
 
 const initialState = {
@@ -16,10 +19,10 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_POST: {
+    case GET_POSTS: {
       return {
         ...state,
-        created: true
+        posts: action.payload.posts
       };
     }
     case GET_POST: {
@@ -33,6 +36,19 @@ export default (state = initialState, action) => {
         ...state,
         currentPost: null,
         posts: action.payload.posts
+      };
+    }
+    case GET_FILTERED_POSTS: {
+      return {
+        ...state,
+        currentPost: null,
+        posts: action.payload.posts
+      };
+    }
+    case CREATE_POST: {
+      return {
+        ...state,
+        created: true
       };
     }
     case UPDATE_POST: {
@@ -54,6 +70,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentPost: action.payload
+      };
+    }
+    case UNSET_CURRENT_POST: {
+      return {
+        ...state,
+        currentPost: null
       };
     }
     case CHANGE_CREATED: {

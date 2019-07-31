@@ -3,12 +3,14 @@ import {
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  LOGOUT
+  LOGOUT,
+  LOAD_USER
 } from '../actions/types';
 
 const initialState = {
   token: localStorage.getItem('token'),
-  isAuthenticated: null
+  isAuthenticated: null,
+  currentUser: null
 };
 
 export default (state = initialState, action) => {
@@ -28,6 +30,12 @@ export default (state = initialState, action) => {
         isAuthenticated: true
       };
     }
+    case LOAD_USER: {
+      return {
+        ...state,
+        currentUser: action.payload.user
+      };
+    }
     case LOGIN_FAILURE: {
       return {
         ...state
@@ -37,7 +45,8 @@ export default (state = initialState, action) => {
       localStorage.removeItem('token');
       return {
         ...state,
-        isAuthenticated: null
+        isAuthenticated: null,
+        currentUser: null
       };
     }
     default:
