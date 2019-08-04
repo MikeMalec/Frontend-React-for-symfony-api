@@ -10,6 +10,7 @@ import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import { clearAlert } from '../actions/alertActions';
 import { unsetLoading, setLoading } from '../actions/loadingActions';
+import { clearNotification } from '../actions/notificationActions';
 
 export const register = formData => async dispatch => {
   const config = {
@@ -23,6 +24,7 @@ export const register = formData => async dispatch => {
 
     dispatch({ type: REGISTER_SUCCESS, payload: res.data });
     dispatch({ type: SET_NOTIFICATION, payload: res.data.message });
+    clearNotification(dispatch);
     unsetLoading(dispatch);
   } catch (error) {
     dispatch({ type: SET_ALERT, payload: error.response.data.title });

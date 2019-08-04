@@ -2,13 +2,23 @@ import React, { useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { getPost } from '../../actions/postActions';
 import Spinner from '../layouts/Spinner';
+import PostCommentForm from '../../components/postComments/PostCommentForm';
+import PostComments from '../../components/postComments/PostComments';
+import PostStats from '../../components/postStats/PostStats';
 
-const Post = ({ getPost, posts: { currentPost }, match, loading }) => {
+const Post = ({
+  auth: { isAuthenticated },
+  getPost,
+  posts: { currentPost },
+  match,
+  loading: { loading, currentId, currentComponent }
+}) => {
   useEffect(() => {
     getPost(match.params.id);
+    // eslint-disable-next-line
   }, []);
 
-  if (loading) {
+  if (loading && currentComponent === null && currentId === null) {
     return <Spinner />;
   } else {
     return currentPost ? (
@@ -40,6 +50,9 @@ const Post = ({ getPost, posts: { currentPost }, match, loading }) => {
         <div className='mt-5 container'>
           <p className='text-left'>{currentPost.body}</p>
         </div>
+        <PostStats />
+        {isAuthenticated && <PostCommentForm currentPostId={currentPost.id} />}
+        <PostComments currentPostId={currentPost.id} />
       </Fragment>
     ) : (
       ''
@@ -48,8 +61,9 @@ const Post = ({ getPost, posts: { currentPost }, match, loading }) => {
 };
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   posts: state.posts,
-  loading: state.loading.loading
+  loading: state.loading
 });
 
 export default connect(

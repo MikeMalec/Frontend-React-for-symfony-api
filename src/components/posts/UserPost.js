@@ -51,21 +51,14 @@ const UserPost = ({
             {currentUser !== null
               ? currentUser.id === post.user.id && (
                   <div className='d-flex justify-content-end'>
-                    <Link
-                      to='/editPost'
-                      type='button'
-                      className='btn btn-warning'
-                      onClick={() => setPost(post)}
-                    >
-                      Edit
+                    <Link to='/editPost' onClick={() => setPost(post)}>
+                      <i className='fas fa-edit fa-2x' />
                     </Link>
-                    <button
-                      type='button'
-                      className='btn btn-danger ml-1'
+                    <i
+                      className='fas fa-trash-alt fa-2x ml-2'
+                      style={{ cursor: 'pointer' }}
                       onClick={() => deletePost(post)}
-                    >
-                      Delete
-                    </button>
+                    />
                   </div>
                 )
               : ''}

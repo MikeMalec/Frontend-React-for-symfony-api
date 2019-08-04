@@ -22,6 +22,7 @@ const EditForm = ({
     }
     currentPost.category = currentPost.category.name;
     setPost(currentPost);
+    // eslint-disable-next-line
   }, [created, history]);
 
   const onChange = e => {

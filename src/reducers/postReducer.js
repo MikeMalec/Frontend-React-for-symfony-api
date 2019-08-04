@@ -22,6 +22,7 @@ export default (state = initialState, action) => {
     case GET_POSTS: {
       return {
         ...state,
+        currentPost: null,
         posts: action.payload.posts
       };
     }

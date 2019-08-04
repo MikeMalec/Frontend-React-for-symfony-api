@@ -1,4 +1,9 @@
-import { UNSET_LOADING, SET_LOADING, SET_LOADING_AND_ID } from './types';
+import {
+  UNSET_LOADING,
+  SET_LOADING,
+  SET_LOADING_AND_ID,
+  SET_LOADING_AND_CURRENT_COMPONENT
+} from './types';
 
 export const setLoading = dispatch => {
   dispatch({ type: SET_LOADING });
@@ -10,4 +15,8 @@ export const unsetLoading = dispatch => {
 
 export const setLoadingAndId = (dispatch, id) => {
   dispatch({ type: SET_LOADING_AND_ID, payload: id });
+};
+
+export const setLoadingAndComponent = (dispatch, component) => {
+  dispatch({ type: SET_LOADING_AND_CURRENT_COMPONENT, payload: component });
 };

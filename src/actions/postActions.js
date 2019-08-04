@@ -10,7 +10,8 @@ import {
   SET_POST,
   UNSET_CURRENT_POST,
   GET_POSTS,
-  GET_FILTERED_POSTS
+  GET_FILTERED_POSTS,
+  CLEAR_COMMENTS
 } from './types';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
@@ -26,6 +27,7 @@ export const getPosts = () => async dispatch => {
   setLoading(dispatch);
   try {
     const res = await axios.get('/posts');
+    dispatch({ type: CLEAR_COMMENTS });
     dispatch({ type: GET_POSTS, payload: res.data });
     unsetLoading(dispatch);
   } catch (error) {
@@ -41,7 +43,7 @@ export const createPost = post => async dispatch => {
       setAuthToken(localStorage.token);
     }
     const res = await axios.post('/posts', post);
-    dispatch({ type: CREATE_POST, payload: res.data });
+    dispatch({ type: CREATE_POST });
     dispatch({ type: SET_NOTIFICATION, payload: res.data.message });
     clearNotification(dispatch);
     changeCreatedToFalse(dispatch);
@@ -69,6 +71,7 @@ export const getUserPosts = () => async dispatch => {
       setAuthToken(localStorage.token);
     }
     const res = await axios.get('/users/posts');
+    dispatch({ type: CLEAR_COMMENTS });
     dispatch({ type: GET_USER_POSTS, payload: res.data });
     unsetLoading(dispatch);
   } catch (error) {

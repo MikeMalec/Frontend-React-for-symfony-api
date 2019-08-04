@@ -7,6 +7,7 @@ import { getPosts } from '../../actions/postActions';
 const Posts = ({ posts: { posts }, getPosts, loading }) => {
   useEffect(() => {
     getPosts();
+    // eslint-disable-next-line
   }, []);
 
   if (loading) {
