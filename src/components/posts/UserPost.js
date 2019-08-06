@@ -9,7 +9,7 @@ const UserPost = ({
   deletePost,
   setPost,
   loading: { loading, currentId },
-  auth: { isAuthenticated, currentUser }
+  auth: { currentUser }
 }) => {
   const decodedThumbnail = 'data:image/jpeg;base64,' + post.encodedThumbnail;
   const { title, body, createdAt, updatedAt, encodedThumbnail, id } = post;
@@ -20,12 +20,17 @@ const UserPost = ({
   } else {
     return (
       <div className='container'>
-        <div className='card mt-5'>
-          <div className='card-header'>
-            <h3>{title}</h3>
+        <div className='card mt-5 p-1'>
+          <div className='card-header p-1'>
+            <h3>
+              {title} by{' '}
+              <Link to={`/showUserProfile/${post.user.id}`}>
+                {post.user.firstName} {post.user.surname}
+              </Link>
+            </h3>
           </div>
-          <div className='card-body'>
-            <h5 className='card-title'>Category: {name}</h5>
+          <div className='card-body p-1'>
+            <h5 className='card-title '>Category: {name}</h5>
             <div className='d-flex'>
               <div className='flex-fill'>
                 {encodedThumbnail && (
@@ -39,7 +44,7 @@ const UserPost = ({
                   </div>
                 )}
               </div>
-              <div className='flex-fill'>{body.slice(0, 600)}...</div>
+              <div className='flex-fill p-1'>{body.slice(0, 600)}...</div>
             </div>
             <p className='mt-1 text-primary'>Created:{createdAt}</p>
             <p className='text-primary'>
@@ -48,6 +53,8 @@ const UserPost = ({
             <Link to={`/posts/${id}`} className='btn btn-primary'>
               Read Post
             </Link>
+            <i className='fas fa-thumbs-up mr-2 ml-4'>{post.amountOfLikes}</i>
+            <i className='fas fa-thumbs-down'>{post.amountOfDislikes}</i>
             {currentUser !== null
               ? currentUser.id === post.user.id && (
                   <div className='d-flex justify-content-end'>

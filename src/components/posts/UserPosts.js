@@ -5,7 +5,7 @@ import { getUserPosts } from '../../actions/postActions';
 import Spinner from '../layouts/Spinner';
 
 const UserPosts = ({
-  posts: { posts },
+  posts: { userPosts },
   getUserPosts,
   loading: { loading, currentId }
 }) => {
@@ -16,15 +16,14 @@ const UserPosts = ({
 
   if (loading && currentId === null) {
     return <Spinner />;
-  } else {
-    return (
-      <Fragment>
-        {posts.map(post => (
-          <UserPost key={post.id} post={post} />
-        ))}
-      </Fragment>
-    );
   }
+  return (
+    <Fragment>
+      {userPosts.map(post => (
+        <UserPost key={post.id} post={post} />
+      ))}
+    </Fragment>
+  );
 };
 
 const mapStateToProps = state => ({

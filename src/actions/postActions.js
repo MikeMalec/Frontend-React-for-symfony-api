@@ -102,7 +102,7 @@ export const updatePost = post => async dispatch => {
     }
 
     const res = await axios.patch(`/posts/${post.id}`, post);
-    dispatch({ type: UPDATE_POST, payload: post });
+    dispatch({ type: UPDATE_POST });
     changeCreatedToFalse(dispatch);
     dispatch({ type: SET_NOTIFICATION, payload: res.data.message });
     clearNotification(dispatch);
@@ -129,6 +129,7 @@ export const deletePost = post => async dispatch => {
       unsetLoading(dispatch);
     }, 500);
   } catch (error) {
+    console.log(error.response.data);
     dispatch({ type: SET_ALERT, payload: error.response.data.title });
     clearAlert(dispatch);
     unsetLoading(dispatch);

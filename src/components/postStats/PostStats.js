@@ -4,25 +4,52 @@ import PostDislike from './PostDislike';
 import PostLikeCounter from './PostLikeCounter';
 import PostDislislikeCounter from './PostDislikeCounter';
 import { connect } from 'react-redux';
+import ListOfUsers from './ListOfUsers';
 
-const PostStats = ({ auth: { isAuthenticated } }) => {
+const PostStats = ({ auth: { isAuthenticated }, currentPost }) => {
   const [likedNow, setLikedNow] = useState(false);
   const [dislikedNow, setDislikedNow] = useState(false);
-  console.log('liked NOw = ' + likedNow);
-  console.log('disliked now = ' + dislikedNow);
+  const [showLikes, setShowLikes] = useState(false);
+  const [showDislikes, setShowDislikes] = useState(false);
+
+  const onClick = () => {
+    window.scrollTo({
+      top: document.body.clientHeight,
+      behaviour: 'auto'
+    });
+  };
+
   return (
     <div className='d-flex justify-content-between'>
       <div>
-        <PostLikeCounter />
-        <PostDislislikeCounter />
+        <ListOfUsers source={currentPost.postLikes} showList={showLikes} />
+        <ListOfUsers
+          source={currentPost.postDislikes}
+          showList={showDislikes}
+        />
+        <PostLikeCounter
+          currentPost={currentPost}
+          showLikes={showLikes}
+          setShowLikes={setShowLikes}
+          showDislikes={showDislikes}
+          setShowDislikes={setShowDislikes}
+        />
+        <PostDislislikeCounter
+          currentPost={currentPost}
+          showDislikes={showDislikes}
+          setShowDislikes={setShowDislikes}
+          showLikes={showLikes}
+          setShowLikes={setShowLikes}
+        />
       </div>
-      <div>
-        <h4>COMMENT POST</h4>
-      </div>
-
-      <div>
-        {isAuthenticated ? (
-          <Fragment>
+      {isAuthenticated && (
+        <Fragment>
+          <div>
+            <h4 onClick={onClick} style={{ cursor: 'pointer' }}>
+              COMMENT POST
+            </h4>
+          </div>
+          <div>
             <PostLike
               dislikedNow={dislikedNow}
               setLikedNow={setLikedNow}
@@ -33,11 +60,9 @@ const PostStats = ({ auth: { isAuthenticated } }) => {
               setDislikedNow={setDislikedNow}
               setLikedNow={setLikedNow}
             />
-          </Fragment>
-        ) : (
-          ''
-        )}
-      </div>
+          </div>
+        </Fragment>
+      )}
     </div>
   );
 };

@@ -13,6 +13,7 @@ import {
 
 const initialState = {
   posts: [],
+  userPosts: [],
   currentPost: null,
   created: false
 };
@@ -36,7 +37,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentPost: null,
-        posts: action.payload.posts
+        userPosts: action.payload.posts
       };
     }
     case GET_FILTERED_POSTS: {
@@ -55,10 +56,7 @@ export default (state = initialState, action) => {
     case UPDATE_POST: {
       return {
         ...state,
-        created: true,
-        posts: state.posts.map(post =>
-          post.id === action.payload.id ? action.payload : post
-        )
+        created: true
       };
     }
     case DELETE_POST: {

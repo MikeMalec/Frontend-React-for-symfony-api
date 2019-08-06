@@ -12,15 +12,14 @@ const Posts = ({ posts: { posts }, getPosts, loading }) => {
 
   if (loading) {
     return <Spinner />;
-  } else {
-    return (
-      <Fragment>
-        {posts.map(post => (
-          <UserPost key={post.id} post={post} />
-        ))}
-      </Fragment>
-    );
   }
+  return (
+    <Fragment>
+      {posts.map(post => (
+        <UserPost key={post.id} post={post} />
+      ))}
+    </Fragment>
+  );
 };
 
 const mapStateToProps = state => ({

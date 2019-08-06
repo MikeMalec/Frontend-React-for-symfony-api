@@ -2,7 +2,8 @@ import {
   SET_LOADING,
   UNSET_LOADING,
   SET_LOADING_AND_ID,
-  SET_LOADING_AND_CURRENT_COMPONENT
+  SET_LOADING_AND_CURRENT_COMPONENT,
+  UNSET_LOADING_WITH_COMPONENT
 } from '../actions/types';
 const initialState = {
   loading: false,
@@ -29,15 +30,21 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        currentComponent: action.payload.component
+        currentComponent: action.payload
+      };
+    }
+    case UNSET_LOADING_WITH_COMPONENT: {
+      return {
+        ...state,
+        loading: false,
+        currentComponent: null
       };
     }
     case UNSET_LOADING: {
       return {
         ...state,
         loading: false,
-        currentId: null,
-        currentComponent: null
+        currentId: null
       };
     }
     default:

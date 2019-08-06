@@ -1,18 +1,30 @@
 import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
 
-const PostDislikeCounter = ({ posts: { currentPost } }) => {
+const PostDislikeCounter = ({
+  currentPost,
+  setShowDislikes,
+  showDislikes,
+  showLikes,
+  setShowLikes
+}) => {
+  const changeDisplaying = () => {
+    if (showLikes === true) {
+      setShowLikes(false);
+    }
+    setShowDislikes(!showDislikes);
+  };
+
   return (
     <Fragment>
-      <i className='fas fa-thumbs-down' style={{ cursor: 'pointer' }}>
+      <i
+        className='fas fa-thumbs-down'
+        style={{ cursor: 'pointer' }}
+        onClick={changeDisplaying}
+      >
         {currentPost.amountOfDislikes}
       </i>
     </Fragment>
   );
 };
 
-const mapStateToProps = state => ({
-  posts: state.posts
-});
-
-export default connect(mapStateToProps)(PostDislikeCounter);
+export default PostDislikeCounter;

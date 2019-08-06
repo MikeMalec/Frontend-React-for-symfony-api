@@ -11,6 +11,11 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   const authLinks = (
     <Fragment>
       <li className='nav-item'>
+        <Link to='/myProfile' className='nav-link'>
+          My Profile
+        </Link>
+      </li>
+      <li className='nav-item'>
         <Link to='/myPosts' className='nav-link'>
           My Posts
         </Link>

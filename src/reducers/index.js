@@ -7,6 +7,8 @@ import loadingReducer from './loadingReducer';
 import postCommentReducer from './PostCommentReducer';
 import postLikeReducer from './postLikeReducer';
 import postDislikeReducer from './postDislikeReducer';
+import commentsOfCommentReducer from './commentsOfCommentReducer';
+import userReducer from './userReducer';
 
 export default combineReducers({
   posts: postReducer,
@@ -16,5 +18,7 @@ export default combineReducers({
   loading: loadingReducer,
   postComments: postCommentReducer,
   postLikes: postLikeReducer,
-  postDislikes: postDislikeReducer
+  postDislikes: postDislikeReducer,
+  comments: commentsOfCommentReducer,
+  user: userReducer
 });

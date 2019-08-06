@@ -9,7 +9,8 @@ import {
 import {
   unsetLoading,
   setLoadingAndId,
-  setLoadingAndComponent
+  setLoadingAndComponent,
+  unsetLoadingWithComponent
 } from '../actions/loadingActions';
 import setAuthToken from '../utils/setAuthToken';
 import axios from 'axios';
@@ -32,7 +33,7 @@ export const getPostComments = postId => async dispatch => {
   try {
     const res = await axios.get(`/posts/${postId}/comments`);
     dispatch({ type: GET_POST_COMMENTS, payload: res.data });
-    unsetLoading(dispatch);
+    unsetLoadingWithComponent(dispatch);
   } catch (error) {}
 };
 

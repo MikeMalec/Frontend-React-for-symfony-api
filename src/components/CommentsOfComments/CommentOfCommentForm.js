@@ -1,26 +1,27 @@
 import React, { useRef } from 'react';
 import { connect } from 'react-redux';
-import {
-  createPostComment,
-  getPostComments
-} from '../../actions/PostCommentActions';
+import { createCommentOfPostComment } from '../../actions/commentsOfCommentActions';
+import { getPostCommentComments } from '../../actions/commentsOfCommentActions';
 import { setAlert } from '../../actions/alertActions';
 
-const PostCommentForm = ({
-  createPostComment,
-  getPostComments,
-  currentPostId,
-  setAlert
+const CommentOfCommentForm = ({
+  postComment,
+  setShowForm,
+  getPostCommentComments
 }) => {
   const commentBody = useRef('');
 
   const onKeyPress = e => {
     if (e.key === 'Enter') {
       if (commentBody.current.value !== '') {
-        createPostComment(currentPostId, { body: commentBody.current.value });
+        createCommentOfPostComment(
+          { body: commentBody.current.value },
+          postComment.id
+        );
         setTimeout(() => {
-          getPostComments(currentPostId);
+          getPostCommentComments(postComment.id);
         }, 100);
+        setShowForm(false);
         commentBody.current.value = '';
       } else {
         setAlert('Please enter something');
@@ -29,11 +30,11 @@ const PostCommentForm = ({
   };
 
   return (
-    <div className='container mt-5'>
-      <div className='form-group mt-5'>
+    <div className='w-50 mt-1'>
+      <div className='form-group '>
         <textarea
           className='form-control'
-          rows='5'
+          rows='3'
           placeholder='Write your comment here'
           ref={commentBody}
           onKeyPress={onKeyPress}
@@ -45,5 +46,5 @@ const PostCommentForm = ({
 
 export default connect(
   null,
-  { createPostComment, setAlert, getPostComments }
-)(PostCommentForm);
+  { getPostCommentComments }
+)(CommentOfCommentForm);
