@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getPostCommentComments } from '../../actions/commentsOfCommentActions';
-import Comment from './Comment';
+import CommentOfPostComment from './CommentOfPostComment';
 import Spinner from '../layouts/Spinner';
 
-const Comments = ({
+const CommentsOfPostComment = ({
   postComment,
   getPostCommentComments,
   comments,
@@ -24,7 +24,7 @@ const Comments = ({
     <div className='ml-5'>
       {commentsOfPostComment &&
         commentsOfPostComment.map(comment => (
-          <Comment
+          <CommentOfPostComment
             key={comment.id}
             comment={comment}
             postCommentId={postComment.id}
@@ -42,4 +42,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getPostCommentComments }
-)(Comments);
+)(CommentsOfPostComment);

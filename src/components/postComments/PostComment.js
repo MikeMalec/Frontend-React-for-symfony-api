@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { deletePostComment } from '../../actions/PostCommentActions';
 import Spinner from '../layouts/Spinner';
 import CommentEdit from './CommentEdit';
-import Comments from '../CommentsOfComments/Comments';
+import CommentsOfPostComment from '../CommentsOfComments/CommentsOfPostComment';
 import CommentOfCommentForm from '../CommentsOfComments/CommentOfCommentForm';
 
 const PostComment = ({
@@ -78,7 +78,7 @@ const PostComment = ({
           )}
         </Fragment>
       )}
-      <Comments postComment={comment} />
+      <CommentsOfPostComment postComment={comment} />
     </Fragment>
   );
 };

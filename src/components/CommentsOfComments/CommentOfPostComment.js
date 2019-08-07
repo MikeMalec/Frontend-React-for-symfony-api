@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { deleteCommentOfPostComment } from '../../actions/commentsOfCommentActions';
 import CommentOfCommentEditForm from './CommentOfCommentEditForm';
 
-const Comment = ({
+const CommentOfPostComment = ({
   auth: { isAuthenticated, currentUser },
   comment,
   deleteCommentOfPostComment,
@@ -71,4 +71,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { deleteCommentOfPostComment }
-)(Comment);
+)(CommentOfPostComment);

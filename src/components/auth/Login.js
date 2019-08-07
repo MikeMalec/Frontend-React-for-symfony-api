@@ -6,7 +6,7 @@ import { setAlert } from '../../actions/alertActions';
 import Spinner from '../layouts/Spinner';
 
 const Login = ({
-  auth: { isAuthenticated, currentUser },
+  auth: { currentUser },
   login,
   setAlert,
   history,
