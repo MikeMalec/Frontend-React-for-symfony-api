@@ -2,12 +2,15 @@ import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alertActions';
 import { updateUserProfile } from '../../actions/userActions';
+import { useFileHandling } from '../../customHooks/useFileHandling';
 
 const UserProfile = ({
   auth: { currentUser },
   updateUserProfile,
   setAlert
 }) => {
+  const fileHandlingHook = useFileHandling();
+
   const [userProfile, setUserProfile] = useState(currentUser);
 
   const {
@@ -20,21 +23,20 @@ const UserProfile = ({
     setUserProfile({ ...userProfile, [e.target.name]: e.target.value });
   };
 
-  const fileAction = e => {
-    const file = e.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      setUserProfile({ ...userProfile, profilePicture: fileReader.result });
-    };
-    fileReader.readAsDataURL(file);
-  };
-
   const onSubmit = e => {
     e.preventDefault();
     if (description === '') {
       setAlert('Tell us something about yourself');
     } else {
-      updateUserProfile(userProfile);
+      if (fileHandlingHook.file !== null) {
+        const userProfileWithPicture = {
+          ...userProfile,
+          profilePicture: fileHandlingHook.file
+        };
+        updateUserProfile(userProfileWithPicture);
+      } else {
+        updateUserProfile(userProfile);
+      }
     }
   };
   return (
@@ -98,7 +100,7 @@ const UserProfile = ({
           <input
             type='file'
             className='form-control-file'
-            onChange={fileAction}
+            onChange={fileHandlingHook.fileAction}
           />
         </div>
         <button type='submit' className='btn btn-primary mb-2'>

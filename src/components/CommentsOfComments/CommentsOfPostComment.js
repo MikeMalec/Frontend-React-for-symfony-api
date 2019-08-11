@@ -8,7 +8,7 @@ const CommentsOfPostComment = ({
   postComment,
   getPostCommentComments,
   comments,
-  loading: { loading, currentComponent }
+  loading: { loading, currentComponent, currentGroup }
 }) => {
   useEffect(() => {
     getPostCommentComments(postComment.id);
@@ -17,7 +17,11 @@ const CommentsOfPostComment = ({
 
   const commentsOfPostComment = comments.get(postComment.id);
 
-  if (loading == true && currentComponent == 'commentsOfcomments') {
+  if (
+    loading == true &&
+    currentComponent == 'commentsOfcomments' &&
+    currentGroup.includes(postComment.id)
+  ) {
     return <Spinner />;
   }
   return (

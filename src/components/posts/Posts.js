@@ -2,11 +2,21 @@ import React, { Fragment, useEffect } from 'react';
 import UserPost from '../posts/UserPost';
 import Spinner from '../layouts/Spinner';
 import { connect } from 'react-redux';
-import { getPosts } from '../../actions/postActions';
+import { getPosts, getMorePosts } from '../../actions/postActions';
+import { usePagination } from '../../customHooks/usePagination';
 
-const Posts = ({ posts: { posts }, getPosts, loading }) => {
+const Posts = ({
+  posts: { posts, amountOfPosts },
+  getPosts,
+  loading,
+  getMorePosts
+}) => {
+  usePagination(getMorePosts, amountOfPosts);
+
   useEffect(() => {
-    getPosts();
+    if (posts.length === 0) {
+      getPosts(0);
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -29,5 +39,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getPosts }
+  { getPosts, getMorePosts }
 )(Posts);

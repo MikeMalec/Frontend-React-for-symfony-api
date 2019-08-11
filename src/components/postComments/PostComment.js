@@ -17,12 +17,6 @@ const PostComment = ({
   const [edit, setEdit] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
-  if (
-    loading &&
-    (currentComponent === 'comments' || currentId === comment.id)
-  ) {
-    return <Spinner />;
-  }
   return (
     <Fragment>
       {edit === true ? (

@@ -8,12 +8,18 @@ import {
   SET_POST,
   UNSET_CURRENT_POST,
   GET_POSTS,
-  GET_FILTERED_POSTS
+  GET_FILTERED_POSTS,
+  GET_MORE_POSTS,
+  GET_MORE_USER_POSTS,
+  GET_MORE_FILTERED_POSTS
 } from '../actions/types';
 
 const initialState = {
   posts: [],
   userPosts: [],
+  currentPartOfFilteredPosts: null,
+  query: null,
+  amountOfPosts: 0,
   currentPost: null,
   created: false
 };
@@ -24,27 +30,55 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentPost: null,
-        posts: action.payload.posts
+        posts: action.payload.posts,
+        amountOfPosts: action.payload.amountOfPosts
       };
     }
     case GET_POST: {
       return {
         ...state,
+        currentPartOfFilteredPosts: null,
+        query: null,
         currentPost: action.payload.post
+      };
+    }
+    case GET_MORE_POSTS: {
+      return {
+        ...state,
+        posts: [...state.posts, action.payload].flat(Infinity)
       };
     }
     case GET_USER_POSTS: {
       return {
         ...state,
         currentPost: null,
-        userPosts: action.payload.posts
+        userPosts: action.payload.posts,
+        amountOfPosts: action.payload.amountOfPosts
+      };
+    }
+    case GET_MORE_USER_POSTS: {
+      return {
+        ...state,
+        userPosts: [...state.userPosts, ...action.payload.posts]
       };
     }
     case GET_FILTERED_POSTS: {
       return {
         ...state,
         currentPost: null,
-        posts: action.payload.posts
+        posts: [],
+        query: action.payload[0],
+        currentPartOfFilteredPosts: action.payload[1].posts,
+        amountOfPosts: action.payload[1].amountOfPosts
+      };
+    }
+    case GET_MORE_FILTERED_POSTS: {
+      return {
+        ...state,
+        currentPartOfFilteredPosts: [
+          ...state.currentPartOfFilteredPosts,
+          ...action.payload.posts
+        ]
       };
     }
     case CREATE_POST: {

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { updatePost } from '../../actions/postActions';
 import { setAlert } from '../../actions/alertActions';
 import Spinner from '../layouts/Spinner';
+import { useFileHandling } from '../../customHooks/useFileHandling';
 
 const EditForm = ({
   posts: { created, currentPost },
@@ -11,6 +12,8 @@ const EditForm = ({
   setAlert,
   loading
 }) => {
+  const fileHandlingHook = useFileHandling();
+
   const thumbnail = 'data:image/jpeg;base64,' + currentPost.encodedThumbnail;
   const [post, setPost] = useState({});
 
@@ -29,21 +32,17 @@ const EditForm = ({
     setPost({ ...post, [e.target.name]: e.target.value });
   };
 
-  const fileAction = e => {
-    const file = e.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      setPost({ ...post, thumbnail: fileReader.result });
-    };
-    fileReader.readAsDataURL(file);
-  };
-
   const onSubmit = e => {
     e.preventDefault();
     if (title === '' || category === '' || body === '') {
       setAlert('Please fill in all fields');
     } else {
-      updatePost(post);
+      if (fileHandlingHook.file !== null) {
+        const postWithThumbnail = { ...post, thumbnail: fileHandlingHook.file };
+        updatePost(postWithThumbnail);
+      } else {
+        updatePost(post);
+      }
     }
   };
 
@@ -104,7 +103,7 @@ const EditForm = ({
             <input
               type='file'
               className='form-control-file'
-              onChange={fileAction}
+              onChange={fileHandlingHook.fileAction}
             />
           </div>
           <button type='submit' className='btn btn-primary mt-3 mb-5'>

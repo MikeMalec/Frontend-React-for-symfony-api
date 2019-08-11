@@ -1,8 +1,13 @@
-import { SET_USER_TO_SHOW, SHOW_USER_POSTS } from '../actions/types';
+import {
+  SET_USER_TO_SHOW,
+  SHOW_USER_POSTS,
+  SHOW_MORE_USER_POSTS
+} from '../actions/types';
 
 const initialState = {
   userToShow: null,
-  userPosts: []
+  userPosts: [],
+  amountOfPosts: 0
 };
 
 export default (state = initialState, action) => {
@@ -16,7 +21,14 @@ export default (state = initialState, action) => {
     case SHOW_USER_POSTS: {
       return {
         ...state,
-        userPosts: action.payload.posts
+        userPosts: action.payload.posts,
+        amountOfPosts: action.payload.amountOfPosts
+      };
+    }
+    case SHOW_MORE_USER_POSTS: {
+      return {
+        ...state,
+        userPosts: [...state.userPosts, ...action.payload.posts]
       };
     }
     default:

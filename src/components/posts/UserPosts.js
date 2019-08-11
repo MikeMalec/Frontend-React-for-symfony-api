@@ -1,16 +1,20 @@
 import React, { Fragment, useEffect } from 'react';
 import UserPost from './UserPost';
 import { connect } from 'react-redux';
-import { getUserPosts } from '../../actions/postActions';
+import { getUserPosts, getMoreUserPosts } from '../../actions/postActions';
 import Spinner from '../layouts/Spinner';
+import { usePagination } from '../../customHooks/usePagination';
 
 const UserPosts = ({
-  posts: { userPosts },
+  posts: { userPosts, amountOfPosts },
   getUserPosts,
+  getMoreUserPosts,
   loading: { loading, currentId }
 }) => {
+  usePagination(getMoreUserPosts, amountOfPosts);
+
   useEffect(() => {
-    getUserPosts();
+    getUserPosts(0);
     // eslint-disable-next-line
   }, []);
 
@@ -33,5 +37,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getUserPosts }
+  { getUserPosts, getMoreUserPosts }
 )(UserPosts);

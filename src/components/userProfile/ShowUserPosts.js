@@ -1,12 +1,19 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getUserPosts } from '../../actions/userActions';
+import { getUserPosts, getMoreUserPosts } from '../../actions/userActions';
 import UserPost from '../../components/posts/UserPost';
+import { usePagination } from '../../customHooks/usePagination';
 
-const ShowUserPosts = ({ user: { userPosts }, match, getUserPosts }) => {
+const ShowUserPosts = ({
+  user: { userPosts, amountOfPosts },
+  match,
+  getUserPosts,
+  getMoreUserPosts
+}) => {
+  usePagination(getMoreUserPosts, amountOfPosts, match.params.id);
+
   useEffect(() => {
-    getUserPosts(match.params.id);
-    console.log(match.params.id);
+    getUserPosts(match.params.id, 0);
   }, []);
 
   return (
@@ -24,5 +31,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getUserPosts }
+  { getUserPosts, getMoreUserPosts }
 )(ShowUserPosts);

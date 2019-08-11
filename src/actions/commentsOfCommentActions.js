@@ -6,18 +6,19 @@ import {
 import setAuthToken from '../utils/setAuthToken';
 import axios from 'axios';
 import {
-  unsetLoading,
-  setLoading,
-  setLoadingAndComponent,
-  unsetLoadingWithComponent
+  setLoadingAndAddCurrentToGroup,
+  unsetLoadingWithComponent,
+  checkWhetherHaveToUnsetLoading,
+  unsetCurrentGroup
 } from './loadingActions';
 
 export const getPostCommentComments = id => async dispatch => {
-  setLoadingAndComponent(dispatch, 'commentsOfcomments');
+  setLoadingAndAddCurrentToGroup(dispatch, id, 'commentsOfcomments');
   try {
     const res = await axios.get(`/comments/${id}/comments-of-comments`);
     dispatch({ type: GET_POST_COMMENT_COMMENTS, payload: [id, res.data] });
-    unsetLoadingWithComponent(dispatch);
+    unsetCurrentGroup(dispatch, id);
+    checkWhetherHaveToUnsetLoading(dispatch);
   } catch (error) {}
 };
 
