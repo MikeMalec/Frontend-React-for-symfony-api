@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { getPost } from '../../actions/postActions';
+import { getPost, unsetCurrentPost } from '../../actions/postActions';
 import { Link } from 'react-router-dom';
 import Spinner from '../layouts/Spinner';
 import PostCommentForm from '../../components/postComments/PostCommentForm';
@@ -10,12 +10,16 @@ import PostStats from '../../components/postStats/PostStats';
 const Post = ({
   auth: { isAuthenticated },
   getPost,
+  unsetCurrentPost,
   posts: { currentPost },
   match,
   loading: { loading, currentId, currentComponent }
 }) => {
   useEffect(() => {
     getPost(match.params.id);
+    return () => {
+      unsetCurrentPost();
+    };
     // eslint-disable-next-line
   }, []);
 
@@ -70,5 +74,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getPost }
+  { getPost, unsetCurrentPost }
 )(Post);

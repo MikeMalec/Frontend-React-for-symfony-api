@@ -51,7 +51,6 @@ export default (state = initialState, action) => {
     case GET_USER_POSTS: {
       return {
         ...state,
-        currentPost: null,
         userPosts: action.payload.posts,
         amountOfPosts: action.payload.amountOfPosts
       };

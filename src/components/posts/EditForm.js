@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { updatePost } from '../../actions/postActions';
+import { updatePost, unsetCurrentPost } from '../../actions/postActions';
 import { setAlert } from '../../actions/alertActions';
 import Spinner from '../layouts/Spinner';
 import { useFileHandling } from '../../customHooks/useFileHandling';
@@ -8,6 +8,7 @@ import { useFileHandling } from '../../customHooks/useFileHandling';
 const EditForm = ({
   posts: { created, currentPost },
   updatePost,
+  unsetCurrentPost,
   history,
   setAlert,
   loading
@@ -18,16 +19,17 @@ const EditForm = ({
   const [post, setPost] = useState({});
 
   const { title, category, body, video } = post;
-
   useEffect(() => {
     if (created === true) {
       history.push('/myPosts');
+    } else {
+      currentPost.category = currentPost.category.name;
+      setPost(currentPost);
     }
-    currentPost.category = currentPost.category.name;
-    setPost(currentPost);
-    // eslint-disable-next-line
+    return () => {
+      unsetCurrentPost();
+    };
   }, [created, history]);
-
   const onChange = e => {
     setPost({ ...post, [e.target.name]: e.target.value });
   };
@@ -135,6 +137,7 @@ export default connect(
   mapStateToProps,
   {
     updatePost,
+    unsetCurrentPost,
     setAlert
   }
 )(EditForm);

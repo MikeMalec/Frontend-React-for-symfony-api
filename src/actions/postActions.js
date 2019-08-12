@@ -10,7 +10,6 @@ import {
   UNSET_CURRENT_POST,
   GET_POSTS,
   GET_FILTERED_POSTS,
-  CLEAR_COMMENTS,
   GET_MORE_POSTS,
   GET_MORE_USER_POSTS,
   GET_MORE_FILTERED_POSTS
@@ -29,7 +28,6 @@ export const getPosts = start => async dispatch => {
   setLoading(dispatch);
   try {
     const res = await axios.get(`/posts/?start=${start}`);
-    dispatch({ type: CLEAR_COMMENTS });
     dispatch({ type: GET_POSTS, payload: res.data });
     unsetLoading(dispatch);
   } catch (error) {
@@ -78,7 +76,6 @@ export const getUserPosts = start => async dispatch => {
       setAuthToken(localStorage.token);
     }
     const res = await axios.get(`/users/posts?start=${start}`);
-    dispatch({ type: CLEAR_COMMENTS });
     dispatch({ type: GET_USER_POSTS, payload: res.data });
     unsetLoading(dispatch);
   } catch (error) {

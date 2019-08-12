@@ -3,7 +3,8 @@ import {
   SET_ALERT,
   GET_POST_COMMENTS,
   DELETE_POST_COMMENT,
-  UPDATE_POST_COMMENT
+  UPDATE_POST_COMMENT,
+  CLEAR_COMMENTS
 } from './types';
 import {
   unsetLoading,
@@ -60,4 +61,10 @@ export const deletePostComment = commentId => async dispatch => {
     clearNotification(dispatch);
     unsetLoading(dispatch);
   } catch (error) {}
+};
+
+export const clearPostComments = () => {
+  return {
+    type: CLEAR_COMMENTS
+  };
 };

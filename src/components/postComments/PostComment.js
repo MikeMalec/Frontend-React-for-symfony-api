@@ -2,7 +2,6 @@ import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deletePostComment } from '../../actions/PostCommentActions';
-import Spinner from '../layouts/Spinner';
 import CommentEdit from './CommentEdit';
 import CommentsOfPostComment from '../CommentsOfComments/CommentsOfPostComment';
 import CommentOfCommentForm from '../CommentsOfComments/CommentOfCommentForm';

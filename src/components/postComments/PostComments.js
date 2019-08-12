@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getPostComments } from '../../actions/PostCommentActions';
+import {
+  getPostComments,
+  clearPostComments
+} from '../../actions/PostCommentActions';
 import PostComment from '../../components/postComments/PostComment';
 import Spinner from '../layouts/Spinner';
 
@@ -8,10 +11,14 @@ const PostComments = ({
   currentPostId,
   comments,
   getPostComments,
+  clearPostComments,
   loading: { loading, currentComponent }
 }) => {
   useEffect(() => {
     getPostComments(currentPostId);
+    return () => {
+      clearPostComments();
+    };
     // eslint-disable-next-line
   }, []);
 
@@ -34,5 +41,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getPostComments }
+  { getPostComments, clearPostComments }
 )(PostComments);

@@ -18,8 +18,8 @@ const CommentsOfPostComment = ({
   const commentsOfPostComment = comments.get(postComment.id);
 
   if (
-    loading == true &&
-    currentComponent == 'commentsOfcomments' &&
+    loading === true &&
+    currentComponent === 'commentsOfcomments' &&
     currentGroup.includes(postComment.id)
   ) {
     return <Spinner />;
