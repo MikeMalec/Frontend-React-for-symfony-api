@@ -1,11 +1,10 @@
 import setAuthToken from '../utils/setAuthToken';
 import {
-  SET_NOTIFICATION,
   SET_USER_TO_SHOW,
   SHOW_USER_POSTS,
   SHOW_MORE_USER_POSTS
 } from './types';
-import { clearNotification } from './notificationActions';
+import { clearNotification, setNotification } from './notificationActions';
 import axios from 'axios';
 import { loadUser } from './authActions';
 
@@ -15,7 +14,7 @@ export const updateUserProfile = profile => async dispatch => {
       setAuthToken(localStorage.token);
     }
     const res = await axios.patch(`/users`, profile);
-    dispatch({ type: SET_NOTIFICATION, payload: res.data.message });
+    setNotification(res.data.message, dispatch);
     loadUser(dispatch);
     clearNotification(dispatch);
   } catch (error) {}
@@ -36,8 +35,6 @@ export const getUserPosts = (id, start) => async dispatch => {
 };
 
 export const getMoreUserPosts = (start, id) => async dispatch => {
-  console.log(start);
-  console.log('id= ' + id);
   try {
     const res = await axios.get(`/users/${id}/posts?start=${start}`);
     dispatch({ type: SHOW_MORE_USER_POSTS, payload: res.data });

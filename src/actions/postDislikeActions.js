@@ -1,24 +1,20 @@
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 
-export const dislikePost = id => async dispatch => {
+export const dislikePost = async id => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
   try {
-    const res = await axios.post(`/posts/${id}/dislikes`);
-  } catch (error) {
-    console.log(error.response.data);
-  }
+    await axios.post(`/posts/${id}/dislikes`);
+  } catch (error) {}
 };
 
-export const deletePostDislike = id => async dispatch => {
+export const deletePostDislike = async id => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
   try {
-    const res = await axios.delete(`/posts/${id}/dislikes`);
-  } catch (error) {
-    console.log(error.response.data);
-  }
+    await axios.delete(`/posts/${id}/dislikes`);
+  } catch (error) {}
 };

@@ -1,6 +1,6 @@
 import { SET_NOTIFICATION, CLEAR_NOTIFICATION } from './types';
 
-export const setNotification = notification => async dispatch => {
+export const setNotification = (notification, dispatch) => {
   dispatch({ type: SET_NOTIFICATION, payload: notification });
   clearNotification(dispatch);
 };

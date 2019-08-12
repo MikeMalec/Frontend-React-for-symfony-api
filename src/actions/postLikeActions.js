@@ -2,24 +2,20 @@ import {} from './types';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 
-export const likePost = id => async dispatch => {
+export const likePost = async id => {
   try {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-    const res = await axios.post(`/posts/${id}/likes`);
-  } catch (error) {
-    console.log(error.response.data);
-  }
+    await axios.post(`/posts/${id}/likes`);
+  } catch (error) {}
 };
 
-export const deletePostLike = id => async dispatch => {
+export const deletePostLike = async id => {
   try {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-    const res = await axios.delete(`/posts/${id}/likes`);
-  } catch (error) {
-    console.log(error.response.data);
-  }
+    await axios.delete(`/posts/${id}/likes`);
+  } catch (error) {}
 };

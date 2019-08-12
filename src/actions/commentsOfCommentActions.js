@@ -7,7 +7,6 @@ import setAuthToken from '../utils/setAuthToken';
 import axios from 'axios';
 import {
   setLoadingAndAddCurrentToGroup,
-  unsetLoadingWithComponent,
   checkWhetherHaveToUnsetLoading,
   unsetCurrentGroup
 } from './loadingActions';
@@ -36,7 +35,7 @@ export const deleteCommentOfPostComment = (id, comment) => async dispatch => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-    const res = await axios.delete(`/comments-of-comments/${comment.id}`);
+    await axios.delete(`/comments-of-comments/${comment.id}`);
     dispatch({ type: DELETE_POST_COMMENT_COMMENT, payload: [id, comment] });
   } catch (error) {}
 };
@@ -46,10 +45,7 @@ export const updateCommentOfPostComment = (id, comment) => async dispatch => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-    const res = await axios.patch(
-      `/comments-of-comments/${comment.id}`,
-      comment
-    );
+    await axios.patch(`/comments-of-comments/${comment.id}`, comment);
     dispatch({ type: UPDATE_POST_COMMENT_COMMENT, payload: [id, comment] });
   } catch (error) {}
 };

@@ -2,7 +2,6 @@ import {
   CREATE_POST,
   GET_USER_POSTS,
   CHANGE_CREATED,
-  SET_NOTIFICATION,
   SET_ALERT,
   DELETE_POST,
   GET_POST,
@@ -18,7 +17,7 @@ import {
 } from './types';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
-import { clearNotification } from './notificationActions';
+import { setNotification, clearNotification } from './notificationActions';
 import { clearAlert } from '../actions/alertActions';
 import {
   setLoading,
@@ -54,7 +53,7 @@ export const createPost = post => async dispatch => {
     }
     const res = await axios.post('/posts', post);
     dispatch({ type: CREATE_POST });
-    dispatch({ type: SET_NOTIFICATION, payload: res.data.message });
+    setNotification(res.data.message, dispatch);
     clearNotification(dispatch);
     changeCreatedToFalse(dispatch);
     unsetLoading(dispatch);
@@ -103,7 +102,6 @@ export const getFilteredPosts = query => async dispatch => {
   setLoading(dispatch);
   try {
     const res = await axios.get(`/posts/${query}&start=0`);
-
     dispatch({ type: GET_FILTERED_POSTS, payload: [query, res.data] });
     unsetLoading(dispatch);
   } catch (error) {
@@ -124,11 +122,10 @@ export const updatePost = post => async dispatch => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-
     const res = await axios.patch(`/posts/${post.id}`, post);
     dispatch({ type: UPDATE_POST });
     changeCreatedToFalse(dispatch);
-    dispatch({ type: SET_NOTIFICATION, payload: res.data.message });
+    setNotification(res.data.message, dispatch);
     clearNotification(dispatch);
     unsetLoading(dispatch);
   } catch (error) {
@@ -147,7 +144,7 @@ export const deletePost = post => async dispatch => {
 
     const res = await axios.delete(`/posts/${post.id}`);
     dispatch({ type: DELETE_POST, payload: post.id });
-    dispatch({ type: SET_NOTIFICATION, payload: res.data.message });
+    setNotification(res.data.message, dispatch);
     clearNotification(dispatch);
     setTimeout(() => {
       unsetLoading(dispatch);
