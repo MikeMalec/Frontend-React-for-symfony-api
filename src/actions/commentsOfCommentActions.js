@@ -15,7 +15,10 @@ export const getPostCommentComments = id => async dispatch => {
   setLoadingAndAddCurrentToGroup(dispatch, id, 'commentsOfcomments');
   try {
     const res = await axios.get(`/comments/${id}/comments-of-comments`);
-    dispatch({ type: GET_POST_COMMENT_COMMENTS, payload: [id, res.data] });
+    dispatch({
+      type: GET_POST_COMMENT_COMMENTS,
+      payload: [id, res.data.comments]
+    });
     unsetCurrentGroup(dispatch, id);
     checkWhetherHaveToUnsetLoading(dispatch);
   } catch (error) {}

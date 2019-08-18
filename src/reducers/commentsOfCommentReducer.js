@@ -10,23 +10,22 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_POST_COMMENT_COMMENTS: {
+      const [id, comments] = action.payload;
       return {
         ...state,
-        comments: new Map(state.comments).set(
-          action.payload[0],
-          action.payload[1].comments
-        )
+        comments: new Map(state.comments).set(id, comments)
       };
     }
     case DELETE_POST_COMMENT_COMMENT: {
-      let comments = state.comments.get(action.payload[0]);
+      const [id, commentForDelete] = action.payload;
+      let comments = state.comments.get(id);
       if (comments) {
         comments = comments.filter(
-          comment => comment.id !== action.payload[1].id
+          comment => comment.id !== commentForDelete.id
         );
         return {
           ...state,
-          comments: new Map(state.comments).set(action.payload[0], comments)
+          comments: new Map(state.comments).set(id, comments)
         };
       } else {
         return {
@@ -35,13 +34,14 @@ export default (state = initialState, action) => {
       }
     }
     case UPDATE_POST_COMMENT_COMMENT: {
-      let comments = state.comments.get(action.payload[0]);
+      const [id, updatedComment] = action.payload;
+      let comments = state.comments.get(id);
       comments = comments.map(comment =>
-        comment.id === action.payload[1].id ? action.payload[1] : comment
+        comment.id === updatedComment.id ? updatedComment : comment
       );
       return {
         ...state,
-        comments: new Map(state.comments).set(action.payload[0], comments)
+        comments: new Map(state.comments).set(id, comments)
       };
     }
     default:

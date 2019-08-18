@@ -62,13 +62,14 @@ export default (state = initialState, action) => {
       };
     }
     case GET_FILTERED_POSTS: {
+      const [query, data] = action.payload;
       return {
         ...state,
         currentPost: null,
         posts: [],
-        query: action.payload[0],
-        currentPartOfFilteredPosts: action.payload[1].posts,
-        amountOfPosts: action.payload[1].amountOfPosts
+        query: query,
+        currentPartOfFilteredPosts: data.posts,
+        amountOfPosts: data.amountOfPosts
       };
     }
     case GET_MORE_FILTERED_POSTS: {
