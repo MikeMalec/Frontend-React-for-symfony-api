@@ -14,7 +14,7 @@ import {
 export const getPostCommentComments = id => async dispatch => {
   setLoadingAndAddCurrentToGroup(dispatch, id, 'commentsOfcomments');
   try {
-    const res = await axios.get(`/comments/${id}/comments-of-comments`);
+    const res = await axios.get(`/comments/${id}/comments`);
     dispatch({
       type: GET_POST_COMMENT_COMMENTS,
       payload: [id, res.data.comments]
@@ -24,12 +24,12 @@ export const getPostCommentComments = id => async dispatch => {
   } catch (error) {}
 };
 
-export const createCommentOfPostComment = (comment, id) => {
+export const createCommentOfPostComment = (id, comment) => {
   try {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-    axios.post(`/comments/${id}/comments-of-comments`, comment);
+    axios.post(`/comments/${id}/comments`, comment);
   } catch (error) {}
 };
 
@@ -38,17 +38,17 @@ export const deleteCommentOfPostComment = (id, comment) => async dispatch => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-    await axios.delete(`/comments-of-comments/${comment.id}`);
+    await axios.delete(`/comments/${comment.id}`);
     dispatch({ type: DELETE_POST_COMMENT_COMMENT, payload: [id, comment] });
   } catch (error) {}
 };
 
-export const updateCommentOfPostComment = (id, comment) => async dispatch => {
+export const updateCommentOfPostComment = comment => {
+  console.log(comment);
   try {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-    await axios.patch(`/comments-of-comments/${comment.id}`, comment);
-    dispatch({ type: UPDATE_POST_COMMENT_COMMENT, payload: [id, comment] });
+    axios.patch(`/comments/${comment.id}`, comment);
   } catch (error) {}
 };

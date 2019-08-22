@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { updatePost, unsetCurrentPost } from '../../actions/postActions';
 import { setAlert } from '../../actions/alertActions';
 import Spinner from '../layouts/Spinner';
-import { useFileHandling } from '../../customHooks/useFileHandling';
+import { useFileHandling } from '../../customHooks/fileHooks/useFileHandling';
 
 const EditForm = ({
   posts: { created, currentPost },

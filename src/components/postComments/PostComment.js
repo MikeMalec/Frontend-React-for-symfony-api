@@ -1,15 +1,22 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deletePostComment } from '../../actions/PostCommentActions';
-import CommentEdit from './CommentEdit';
-import CommentsOfPostComment from '../CommentsOfComments/CommentsOfPostComment';
-import CommentOfCommentForm from '../CommentsOfComments/CommentOfCommentForm';
+import {
+  deletePostComment,
+  updatePostComment,
+  getPostComments
+} from '../../actions/PostCommentActions';
+import CommentEdit from '../comments/CommentEdit';
+import CommentsOfPostComment from '../commentsOfComments/CommentsOfPostComment';
+import CommentOfCommentForm from '../commentsOfComments/CommentOfCommentForm';
 
 const PostComment = ({
+  id,
   comment,
   auth: { isAuthenticated, currentUser },
   deletePostComment,
+  updatePostComment,
+  getPostComments,
   loading: { loading, currentId, currentComponent }
 }) => {
   const cursor = { cursor: 'pointer' };
@@ -19,7 +26,13 @@ const PostComment = ({
   return (
     <Fragment>
       {edit === true ? (
-        <CommentEdit comment={comment} setEdit={setEdit} />
+        <CommentEdit
+          comment={comment}
+          updateComment={updatePostComment}
+          setEdit={setEdit}
+          getComments={getPostComments}
+          id={id}
+        />
       ) : (
         <Fragment>
           <div className='card mt-5 w-50'>
@@ -83,5 +96,5 @@ const mapPropsToState = state => ({
 
 export default connect(
   mapPropsToState,
-  { deletePostComment }
+  { deletePostComment, updatePostComment, getPostComments }
 )(PostComment);

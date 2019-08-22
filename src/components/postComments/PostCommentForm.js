@@ -4,29 +4,21 @@ import {
   createPostComment,
   getPostComments
 } from '../../actions/PostCommentActions';
-import { setAlert } from '../../actions/alertActions';
+import { useCommentFormSubmit } from '../../customHooks/commentHooks/useCommentFormSubmit';
 
 const PostCommentForm = ({
   createPostComment,
   getPostComments,
-  currentPostId,
-  setAlert
+  currentPostId
 }) => {
   const commentBody = useRef('');
 
-  const onKeyPress = e => {
-    if (e.key === 'Enter') {
-      if (commentBody.current.value !== '') {
-        createPostComment(currentPostId, { body: commentBody.current.value });
-        setTimeout(() => {
-          getPostComments(currentPostId);
-        }, 100);
-        commentBody.current.value = '';
-      } else {
-        setAlert('Please enter something');
-      }
-    }
-  };
+  const onKeyPress = useCommentFormSubmit(
+    commentBody,
+    currentPostId,
+    createPostComment,
+    getPostComments
+  );
 
   return (
     <div className='container mt-5'>
@@ -45,5 +37,5 @@ const PostCommentForm = ({
 
 export default connect(
   null,
-  { createPostComment, setAlert, getPostComments }
+  { createPostComment, getPostComments }
 )(PostCommentForm);

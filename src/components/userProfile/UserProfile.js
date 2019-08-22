@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alertActions';
 import { updateUserProfile } from '../../actions/userActions';
-import { useFileHandling } from '../../customHooks/useFileHandling';
+import { useFileHandling } from '../../customHooks/fileHooks/useFileHandling';
 
 const UserProfile = ({
   auth: { currentUser },

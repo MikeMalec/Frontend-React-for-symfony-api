@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { getMoreFilteredPosts } from '../../actions/postActions';
-import { usePagination } from '../../customHooks/usePagination';
+import { usePagination } from '../../customHooks/paginationHooks/usePagination';
 import UserPost from './UserPost';
 
 const FilteredPosts = ({

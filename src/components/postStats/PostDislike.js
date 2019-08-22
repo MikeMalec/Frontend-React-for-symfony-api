@@ -4,21 +4,19 @@ import {
   dislikePost,
   deletePostDislike
 } from '../../actions/postDislikeActions';
+import { useUserPostActivity } from '../../customHooks/postStats/useUserPostActivity';
 
 const PostDislike = ({
   auth: { currentUser },
   posts: { currentPost },
-  dislikePost,
-  deletePostDislike,
   likedNow,
   setDislikedNow,
   setLikedNow
 }) => {
-  let userPotentialPostDislike = currentPost.postDislikes.filter(
-    postDislike => postDislike.user.id === currentUser.id
-  ).length;
-
-  let alreadyDisliked = userPotentialPostDislike === 0 ? false : true;
+  const alreadyDisliked = useUserPostActivity(
+    currentPost.postDislikes,
+    currentUser.id
+  );
 
   const [disliked, setDisliked] = useState(alreadyDisliked);
 
@@ -56,7 +54,4 @@ const mapStateToProps = state => ({
   posts: state.posts
 });
 
-export default connect(
-  mapStateToProps,
-  { dislikePost, deletePostDislike }
-)(PostDislike);
+export default connect(mapStateToProps)(PostDislike);

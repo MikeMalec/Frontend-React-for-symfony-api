@@ -3,7 +3,7 @@ import UserPost from './UserPost';
 import { connect } from 'react-redux';
 import { getUserPosts, getMoreUserPosts } from '../../actions/postActions';
 import Spinner from '../layouts/Spinner';
-import { usePagination } from '../../customHooks/usePagination';
+import { usePagination } from '../../customHooks/paginationHooks/usePagination';
 
 const UserPosts = ({
   posts: { userPosts, amountOfPosts },

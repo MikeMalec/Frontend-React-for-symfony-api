@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getUserPosts, getMoreUserPosts } from '../../actions/userActions';
 import UserPost from '../../components/posts/UserPost';
-import { usePagination } from '../../customHooks/usePagination';
+import { usePagination } from '../../customHooks/paginationHooks/usePagination';
 
 const ShowUserPosts = ({
   user: { userPosts, amountOfPosts },

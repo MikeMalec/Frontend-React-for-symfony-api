@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createPost } from '../../actions/postActions';
 import { updatePost } from '../../actions/postActions';
 import { setAlert } from '../../actions/alertActions';
-import { useFileHandling } from '../../customHooks/useFileHandling';
+import { useFileHandling } from '../../customHooks/fileHooks/useFileHandling';
 
 const PostForm = ({ posts: { created }, createPost, history, setAlert }) => {
   const fileHandlingHook = useFileHandling();

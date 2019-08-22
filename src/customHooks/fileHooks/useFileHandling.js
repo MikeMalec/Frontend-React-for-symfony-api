@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export const useFileHandling = () => {
   const [file, setFile] = useState(null);

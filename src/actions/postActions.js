@@ -126,6 +126,7 @@ export const updatePost = post => async dispatch => {
     clearNotification(dispatch);
     unsetLoading(dispatch);
   } catch (error) {
+    console.log(error.response.data);
     dispatch({ type: SET_ALERT, payload: error.response.data.message });
     clearAlert(dispatch);
     unsetLoading(dispatch);

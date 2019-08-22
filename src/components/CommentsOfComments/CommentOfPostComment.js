@@ -1,30 +1,33 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deleteCommentOfPostComment } from '../../actions/commentsOfCommentActions';
-import CommentOfCommentEditForm from './CommentOfCommentEditForm';
+import {
+  deleteCommentOfPostComment,
+  updateCommentOfPostComment,
+  getPostCommentComments
+} from '../../actions/commentsOfCommentActions';
+import CommentEdit from '../comments/CommentEdit';
 
 const CommentOfPostComment = ({
-  auth: { isAuthenticated, currentUser },
+  postCommentId,
   comment,
+  auth: { isAuthenticated, currentUser },
   deleteCommentOfPostComment,
-  postCommentId
+  getPostCommentComments
 }) => {
   const cursor = { cursor: 'pointer' };
 
   const [edit, setEdit] = useState(false);
 
-  const deleteComment = () => {
-    deleteCommentOfPostComment(postCommentId, comment);
-  };
-
   return (
     <Fragment>
       {edit ? (
-        <CommentOfCommentEditForm
+        <CommentEdit
           comment={comment}
+          updateComment={updateCommentOfPostComment}
           setEdit={setEdit}
-          postCommentId={postCommentId}
+          getComments={getPostCommentComments}
+          id={postCommentId}
         />
       ) : (
         <div className='card w-50'>
@@ -45,7 +48,9 @@ const CommentOfPostComment = ({
                   <i
                     className='fas fa-trash-alt ml-2'
                     style={cursor}
-                    onClick={deleteComment}
+                    onClick={() =>
+                      deleteCommentOfPostComment(postCommentId, comment)
+                    }
                   />
                 </Fragment>
               ) : (
@@ -70,5 +75,8 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { deleteCommentOfPostComment }
+  {
+    deleteCommentOfPostComment,
+    getPostCommentComments
+  }
 )(CommentOfPostComment);

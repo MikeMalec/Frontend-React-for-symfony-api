@@ -1,22 +1,19 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { likePost, deletePostLike } from '../../actions/postLikeActions';
+import { useUserPostActivity } from '../../customHooks/postStats/useUserPostActivity';
 
 const PostLike = ({
   auth: { currentUser },
   posts: { currentPost },
-  likePost,
-  deletePostLike,
   dislikedNow,
   setLikedNow,
   setDislikedNow
 }) => {
-  let userPotentialPostLike = currentPost.postLikes.filter(
-    postLike => postLike.user.id === currentUser.id
-  ).length;
-
-  let alreadyLiked = userPotentialPostLike === 0 ? false : true;
-
+  const alreadyLiked = useUserPostActivity(
+    currentPost.postLikes,
+    currentUser.id
+  );
   const [liked, setLiked] = useState(alreadyLiked);
 
   if (dislikedNow === true && liked === true) {
@@ -26,6 +23,7 @@ const PostLike = ({
   }
 
   const color = liked === true ? 'blue' : 'black';
+
   const handleClick = () => {
     if (liked === true) {
       deletePostLike(currentPost.id);
@@ -53,7 +51,4 @@ const mapStateToProps = state => ({
   posts: state.posts
 });
 
-export default connect(
-  mapStateToProps,
-  { likePost, deletePostLike }
-)(PostLike);
+export default connect(mapStateToProps)(PostLike);

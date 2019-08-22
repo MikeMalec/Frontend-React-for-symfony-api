@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 import { createCommentOfPostComment } from '../../actions/commentsOfCommentActions';
 import { getPostCommentComments } from '../../actions/commentsOfCommentActions';
-import { setAlert } from '../../actions/alertActions';
+import { useCommentFormSubmit } from '../../customHooks/commentHooks/useCommentFormSubmit';
 
 const CommentOfCommentForm = ({
   postComment,
@@ -10,24 +10,13 @@ const CommentOfCommentForm = ({
   getPostCommentComments
 }) => {
   const commentBody = useRef('');
-
-  const onKeyPress = e => {
-    if (e.key === 'Enter') {
-      if (commentBody.current.value !== '') {
-        createCommentOfPostComment(
-          { body: commentBody.current.value },
-          postComment.id
-        );
-        setTimeout(() => {
-          getPostCommentComments(postComment.id);
-        }, 100);
-        setShowForm(false);
-        commentBody.current.value = '';
-      } else {
-        setAlert('Please enter something');
-      }
-    }
-  };
+  const onKeyPress = useCommentFormSubmit(
+    commentBody,
+    postComment.id,
+    createCommentOfPostComment,
+    getPostCommentComments,
+    setShowForm
+  );
 
   return (
     <div className='w-50 mt-1'>
