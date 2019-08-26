@@ -1,17 +1,8 @@
 import React, { Fragment } from 'react';
 
-const PostLikeCounter = ({
-  currentPost,
-  setShowLikes,
-  showLikes,
-  showDislikes,
-  setShowDislikes
-}) => {
+const PostLikeCounter = ({ currentPost, setShowLikes }) => {
   const changeDisplaying = () => {
-    if (showDislikes === true) {
-      setShowDislikes(false);
-    }
-    setShowLikes(!showLikes);
+    setShowLikes(true);
   };
 
   return (

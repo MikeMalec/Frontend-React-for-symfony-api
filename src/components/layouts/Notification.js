@@ -5,7 +5,18 @@ const Notification = ({ notification: { notification } }) => {
   return (
     <Fragment>
       {notification ? (
-        <div className='alert alert-success w-25 mt-3 mb-2'>{notification}</div>
+        <div
+          className='alert alert-success'
+          style={{
+            position: 'absolute',
+            width: '20%',
+            marginLeft: '40%',
+            zIndex: 1,
+            textAlign: 'center'
+          }}
+        >
+          {notification}
+        </div>
       ) : (
         ''
       )}

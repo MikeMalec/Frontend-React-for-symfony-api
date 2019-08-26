@@ -22,8 +22,8 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Navbar />
+        <Notification />
         <div className='container'>
-          <Notification />
           <Alert />
           <Switch>
             <Route exact path='/' component={Home} />

@@ -1,7 +1,6 @@
 import {
   GET_POST_COMMENT_COMMENTS,
-  DELETE_POST_COMMENT_COMMENT,
-  UPDATE_POST_COMMENT_COMMENT
+  DELETE_POST_COMMENT_COMMENT
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
 import axios from 'axios';

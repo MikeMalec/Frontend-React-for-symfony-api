@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/authActions';
+import UserNotifications from '../UserNotifications/UserNotifications';
 
 const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   const logoutUser = () => {
@@ -30,6 +31,9 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
 
   const logoutLink = (
     <ul className='nav bg-light p-3'>
+      <li>
+        <UserNotifications />
+      </li>
       <li className='nav-item'>
         <button className='btn btn-link' onClick={logoutUser}>
           Logout

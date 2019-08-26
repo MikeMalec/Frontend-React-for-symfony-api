@@ -5,7 +5,10 @@ const Alert = ({ alert: { alert } }) => {
   return (
     <Fragment>
       {alert ? (
-        <div className='alert alert-danger w-100 mt-5'>
+        <div
+          className='alert alert-danger'
+          style={{ position: 'absolute', width: '15%', marginLeft: '22%' }}
+        >
           <i className='fas fa-info-circle' /> {alert}
         </div>
       ) : (

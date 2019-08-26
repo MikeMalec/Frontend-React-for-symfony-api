@@ -1,12 +1,33 @@
 import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getUserToShow } from '../../actions/userActions';
+import {
+  getUserToShow,
+  getUserFollowers,
+  getUserFollowed,
+  unsetUserToShow
+} from '../../actions/userActions';
+import FollowUser from './FollowUser';
+import UserFollowers from './UserFollowers';
+import UserFollowed from './UserFollowed';
 
-const ShowUserProfile = ({ getUserToShow, user: { userToShow }, match }) => {
+const ShowUserProfile = ({
+  getUserToShow,
+  getUserFollowers,
+  getUserFollowed,
+  unsetUserToShow,
+  user: { userToShow, userFollowers, userFollowed },
+  match,
+  auth: { isAuthenticated, currentUser }
+}) => {
   useEffect(() => {
     getUserToShow(match.params.id);
-  }, []);
+    getUserFollowers(match.params.id);
+    getUserFollowed(match.params.id);
+    return () => {
+      unsetUserToShow();
+    };
+  }, [match.params.id]);
 
   return (
     <Fragment>
@@ -32,12 +53,25 @@ const ShowUserProfile = ({ getUserToShow, user: { userToShow }, match }) => {
               />
             )}
           </div>
+          <div className='d-flex flex-row-reverse bd-highlight'>
+            {isAuthenticated && userToShow.id !== currentUser.id ? (
+              <FollowUser
+                currentUser={currentUser}
+                userFollowers={userFollowers}
+                userToShow={userToShow}
+              />
+            ) : (
+              ''
+            )}
+          </div>
           <div className='text-center mt-3 '>
             <p>{userToShow.description}</p>
           </div>
-          <Link to={`/userPosts/${userToShow.id}`}>
-            <h3>User posts</h3>
-          </Link>
+          <UserFollowers userFollowers={userFollowers} />
+          <UserFollowed userFollowed={userFollowed} userToShow={userToShow} />
+          <div className='d-flex justify-content-center'>
+            <Link to={`/userPosts/${userToShow.id}`}>User posts</Link>
+          </div>
         </Fragment>
       ) : (
         ''
@@ -47,10 +81,16 @@ const ShowUserProfile = ({ getUserToShow, user: { userToShow }, match }) => {
 };
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { getUserToShow }
+  {
+    getUserToShow,
+    getUserFollowers,
+    getUserFollowed,
+    unsetUserToShow
+  }
 )(ShowUserProfile);

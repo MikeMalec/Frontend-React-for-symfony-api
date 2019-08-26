@@ -9,6 +9,7 @@ import postLikeReducer from './postLikeReducer';
 import postDislikeReducer from './postDislikeReducer';
 import commentOfCommentReducer from './commentOfCommentReducer';
 import userReducer from './userReducer';
+import UserNotificationReducer from './UserNotificationReducer';
 
 export default combineReducers({
   posts: postReducer,
@@ -20,5 +21,6 @@ export default combineReducers({
   postLikes: postLikeReducer,
   postDislikes: postDislikeReducer,
   comments: commentOfCommentReducer,
-  user: userReducer
+  user: userReducer,
+  userNotifications: UserNotificationReducer
 });

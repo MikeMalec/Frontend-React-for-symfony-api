@@ -21,7 +21,7 @@ const Post = ({
       unsetCurrentPost();
     };
     // eslint-disable-next-line
-  }, []);
+  }, [match.params.id]);
 
   if (loading && currentComponent === null && currentId === null) {
     return <Spinner />;

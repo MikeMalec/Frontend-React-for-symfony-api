@@ -55,7 +55,9 @@ export const createPost = post => async dispatch => {
     clearNotification(dispatch);
     changeCreatedToFalse(dispatch);
     unsetLoading(dispatch);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error.response.data);
+  }
 };
 
 export const getPost = id => async dispatch => {
@@ -148,6 +150,7 @@ export const deletePost = post => async dispatch => {
       unsetLoading(dispatch);
     }, 500);
   } catch (error) {
+    console.log(error.response.data);
     dispatch({ type: SET_ALERT, payload: error.response.data.title });
     clearAlert(dispatch);
     unsetLoading(dispatch);
