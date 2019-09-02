@@ -14,7 +14,6 @@ const CommentOfCommentForm = ({
     commentBody,
     postComment.id,
     createCommentOfPostComment,
-    getPostCommentComments,
     setShowForm
   );
 

@@ -9,6 +9,7 @@ import {
 import CommentEdit from '../comments/CommentEdit';
 import CommentsOfPostComment from '../commentsOfComments/CommentsOfPostComment';
 import CommentOfCommentForm from '../commentsOfComments/CommentOfCommentForm';
+import Spinner from '../layouts/Spinner';
 
 const PostComment = ({
   id,
@@ -22,7 +23,9 @@ const PostComment = ({
   const cursor = { cursor: 'pointer' };
   const [edit, setEdit] = useState(false);
   const [showForm, setShowForm] = useState(false);
-
+  if (loading === true && currentComponent === 'comments') {
+    return <Spinner />;
+  }
   return (
     <Fragment>
       {edit === true ? (

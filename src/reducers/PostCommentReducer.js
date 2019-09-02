@@ -2,7 +2,9 @@ import {
   GET_POST_COMMENTS,
   DELETE_POST_COMMENT,
   UPDATE_POST_COMMENT,
-  CLEAR_COMMENTS
+  CLEAR_COMMENTS,
+  CREATE_POST_COMMENT,
+  ADD_COMMENT
 } from '../actions/types';
 
 const initialState = {
@@ -31,6 +33,12 @@ export default (state = initialState, action) => {
         comments: state.comments.filter(
           comment => comment.id !== action.payload
         )
+      };
+    }
+    case ADD_COMMENT: {
+      return {
+        ...state,
+        comments: [...state.comments, action.payload]
       };
     }
     case CLEAR_COMMENTS: {

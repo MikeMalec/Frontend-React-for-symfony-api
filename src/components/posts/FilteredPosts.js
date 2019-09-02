@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getMoreFilteredPosts } from '../../actions/postActions';
 import { usePagination } from '../../customHooks/paginationHooks/usePagination';
@@ -8,6 +8,10 @@ const FilteredPosts = ({
   posts: { currentPartOfFilteredPosts, query, amountOfPosts },
   getMoreFilteredPosts
 }) => {
+  useEffect(() => {
+    return () => {};
+  });
+
   usePagination(getMoreFilteredPosts, amountOfPosts, null, query);
   return (
     <Fragment>

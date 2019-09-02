@@ -12,7 +12,8 @@ import {
   GET_FILTERED_POSTS,
   GET_MORE_POSTS,
   GET_MORE_USER_POSTS,
-  GET_MORE_FILTERED_POSTS
+  GET_MORE_FILTERED_POSTS,
+  CLEAR_POSTS
 } from './types';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
@@ -169,4 +170,8 @@ export const changeCreatedToFalse = dispatch => {
 
 export const unsetCurrentPost = () => async dispatch => {
   dispatch({ type: UNSET_CURRENT_POST });
+};
+
+export const clearPosts = () => {
+  return { type: CLEAR_POSTS };
 };

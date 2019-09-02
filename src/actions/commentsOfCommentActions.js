@@ -1,6 +1,7 @@
 import {
   GET_POST_COMMENT_COMMENTS,
-  DELETE_POST_COMMENT_COMMENT
+  DELETE_POST_COMMENT_COMMENT,
+  ADD_COMMENT_OF_POST_COMMENT
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
 import axios from 'axios';
@@ -20,15 +21,18 @@ export const getPostCommentComments = id => async dispatch => {
     });
     unsetCurrentGroup(dispatch, id);
     checkWhetherHaveToUnsetLoading(dispatch);
-  } catch (error) {}
+  } catch (error) {
+    unsetCurrentGroup(dispatch, id);
+    console.log(error.response.data);
+  }
 };
 
-export const createCommentOfPostComment = (id, comment) => {
+export const createCommentOfPostComment = async (id, comment) => {
   try {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-    axios.post(`/comments/${id}/comments`, comment);
+    await axios.post(`/comments/${id}/comments`, comment);
   } catch (error) {}
 };
 
@@ -50,4 +54,11 @@ export const updateCommentOfPostComment = comment => {
     }
     axios.patch(`/comments/${comment.id}`, comment);
   } catch (error) {}
+};
+
+export const addCommentOfPostComment = data => {
+  return {
+    type: ADD_COMMENT_OF_POST_COMMENT,
+    payload: data
+  };
 };

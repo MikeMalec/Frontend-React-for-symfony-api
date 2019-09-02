@@ -2,17 +2,20 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   getPostComments,
-  clearPostComments
+  clearPostComments,
+  addComment
 } from '../../actions/PostCommentActions';
+import { addCommentOfPostComment } from '../../actions/commentsOfCommentActions';
 import PostComment from '../../components/postComments/PostComment';
-import Spinner from '../layouts/Spinner';
+import socketIOClient from 'socket.io-client';
 
 const PostComments = ({
   currentPostId,
   comments,
   getPostComments,
   clearPostComments,
-  loading: { loading, currentComponent }
+  addComment,
+  addCommentOfPostComment
 }) => {
   useEffect(() => {
     getPostComments(currentPostId);
@@ -22,9 +25,16 @@ const PostComments = ({
     // eslint-disable-next-line
   }, []);
 
-  if (loading === true && currentComponent === 'comments') {
-    return <Spinner />;
-  }
+  useEffect(() => {
+    const socket = socketIOClient('http://localhost:4000');
+    socket.emit('source', { id: currentPostId });
+    socket.on('newComment', data => addComment(data));
+    socket.on('newCommentOfComment', data => addCommentOfPostComment(data));
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   return (
     <div className='mt-5'>
       {comments.map(comment => (
@@ -41,5 +51,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getPostComments, clearPostComments }
+  { getPostComments, clearPostComments, addComment, addCommentOfPostComment }
 )(PostComments);

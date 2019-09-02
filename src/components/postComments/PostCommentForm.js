@@ -16,8 +16,7 @@ const PostCommentForm = ({
   const onKeyPress = useCommentFormSubmit(
     commentBody,
     currentPostId,
-    createPostComment,
-    getPostComments
+    createPostComment
   );
 
   return (

@@ -11,7 +11,8 @@ import {
   GET_FILTERED_POSTS,
   GET_MORE_POSTS,
   GET_MORE_USER_POSTS,
-  GET_MORE_FILTERED_POSTS
+  GET_MORE_FILTERED_POSTS,
+  CLEAR_POSTS
 } from '../actions/types';
 
 const initialState = {
@@ -110,6 +111,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentPost: null
+      };
+    }
+    case CLEAR_POSTS: {
+      return {
+        ...state,
+        posts: []
       };
     }
     case CHANGE_CREATED: {

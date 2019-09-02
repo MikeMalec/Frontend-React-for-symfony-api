@@ -4,7 +4,8 @@ import {
   GET_POST_COMMENTS,
   DELETE_POST_COMMENT,
   UPDATE_POST_COMMENT,
-  CLEAR_COMMENTS
+  CLEAR_COMMENTS,
+  ADD_COMMENT
 } from './types';
 import {
   unsetLoading,
@@ -22,14 +23,13 @@ export const createPostComment = (postId, comment) => async dispatch => {
       setAuthToken(localStorage.token);
     }
     await axios.post(`/posts/${postId}/comments`, comment);
-    dispatch({ type: CREATE_POST_COMMENT, payload: comment });
   } catch (error) {
+    console.log(error.response.data);
     dispatch({ type: SET_ALERT, payload: error.response.data.title });
   }
 };
 
 export const getPostComments = postId => async dispatch => {
-  setLoadingAndComponent(dispatch, 'comments');
   try {
     const res = await axios.get(`/posts/${postId}/comments`);
     dispatch({ type: GET_POST_COMMENTS, payload: res.data });
@@ -46,7 +46,9 @@ export const updatePostComment = comment => async dispatch => {
     dispatch({ type: UPDATE_POST_COMMENT, payload: comment });
     setNotification(res.data.message, dispatch);
     clearNotification(dispatch);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error.response.data);
+  }
 };
 
 export const deletePostComment = commentId => async dispatch => {
@@ -61,6 +63,14 @@ export const deletePostComment = commentId => async dispatch => {
     clearNotification(dispatch);
     unsetLoading(dispatch);
   } catch (error) {}
+};
+
+export const addComment = comment => {
+  console.log(comment);
+  return {
+    type: ADD_COMMENT,
+    payload: comment
+  };
 };
 
 export const clearPostComments = () => {
