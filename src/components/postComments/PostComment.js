@@ -18,7 +18,7 @@ const PostComment = ({
   deletePostComment,
   updatePostComment,
   getPostComments,
-  loading: { loading, currentId, currentComponent }
+  loading: { loading, currentComponent }
 }) => {
   const cursor = { cursor: 'pointer' };
   const [edit, setEdit] = useState(false);

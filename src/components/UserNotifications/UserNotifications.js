@@ -17,8 +17,9 @@ const UserNotifications = ({
   const [show, setShow] = useState(false);
 
   const counterStyle = {
+    position: 'absolute',
     fontSize: '25px',
-    zIndex: '2',
+    zIndex: '1',
     marginLeft: '30px',
     marginTop: '-11px',
     fontStyle: 'italic'
@@ -64,7 +65,8 @@ const UserNotifications = ({
             left: '0',
             scrollbarWidth: '5px',
             position: 'absolute',
-            marginLeft: '75%'
+            marginLeft: '75%',
+            zIndex: '1'
           }}
         >
           {notifications.map(notification => (

@@ -10,10 +10,7 @@ const PostLike = ({
   setLikedNow,
   setDislikedNow
 }) => {
-  const alreadyLiked = useUserPostActivity(
-    currentPost.postLikes,
-    currentUser.id
-  );
+  const alreadyLiked = useUserPostActivity(currentPost.likes, currentUser.id);
   const [liked, setLiked] = useState(alreadyLiked);
 
   if (dislikedNow === true && liked === true) {

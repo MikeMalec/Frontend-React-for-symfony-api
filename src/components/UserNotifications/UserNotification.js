@@ -27,14 +27,14 @@ const UserNotification = ({ userNotification, setShow }) => {
               style={{ width: '10%', height: '15%' }}
               src={
                 'data:image/jpeg;base64,' +
-                userNotification.notificationOwner.encodedProfilePicture
+                userNotification.notificationCauser.encodedProfilePicture
               }
               alt='...'
               className='img-thumbnail'
             ></img>
             <div>
-              {userNotification.notificationOwner.firstName}{' '}
-              {userNotification.notificationOwner.surname} wrote new article!
+              {userNotification.notificationCauser.firstName}{' '}
+              {userNotification.notificationCauser.surname} wrote new article!
             </div>
           </div>
           {userNotification.post.title.slice(0, 30)}...

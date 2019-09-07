@@ -14,7 +14,7 @@ const PostDislike = ({
   setLikedNow
 }) => {
   const alreadyDisliked = useUserPostActivity(
-    currentPost.postDislikes,
+    currentPost.dislikes,
     currentUser.id
   );
 

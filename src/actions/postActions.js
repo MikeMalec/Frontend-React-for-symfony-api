@@ -26,6 +26,7 @@ import {
 } from '../actions/loadingActions';
 
 export const getPosts = start => async dispatch => {
+  start = start === undefined ? 0 : start;
   setLoading(dispatch);
   try {
     const res = await axios.get(`/posts/?start=${start}`);
@@ -105,6 +106,7 @@ export const getFilteredPosts = query => async dispatch => {
     dispatch({ type: GET_FILTERED_POSTS, payload: [query, res.data] });
     unsetLoading(dispatch);
   } catch (error) {
+    console.log(error.response.data);
     unsetLoading(dispatch);
   }
 };

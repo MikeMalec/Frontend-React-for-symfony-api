@@ -43,7 +43,9 @@ export const deleteCommentOfPostComment = (id, comment) => async dispatch => {
     }
     await axios.delete(`/comments/${comment.id}`);
     dispatch({ type: DELETE_POST_COMMENT_COMMENT, payload: [id, comment] });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error.response.data);
+  }
 };
 
 export const updateCommentOfPostComment = comment => {
