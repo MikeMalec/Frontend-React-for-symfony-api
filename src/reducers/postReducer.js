@@ -1,6 +1,5 @@
 import {
   CREATE_POST,
-  GET_USER_POSTS,
   CHANGE_CREATED,
   DELETE_POST,
   GET_POST,
@@ -10,17 +9,23 @@ import {
   GET_POSTS,
   GET_FILTERED_POSTS,
   GET_MORE_POSTS,
-  GET_MORE_USER_POSTS,
   GET_MORE_FILTERED_POSTS,
-  CLEAR_POSTS
+  CLEAR_POSTS,
+  GET_USER_PUBLISHED_POSTS,
+  GET_USER_UNPUBLISHED_POSTS,
+  GET_MORE_USER_PUBLISHED_POSTS,
+  GET_MORE_USER_UNPUBLISHED_POSTS,
+  CLEAR_ALL_USER_POSTS
 } from '../actions/types';
 
 const initialState = {
   posts: [],
-  userPosts: [],
+  userPublishedPosts: [],
+  userUnpublishedPosts: [],
   currentPartOfFilteredPosts: null,
   query: null,
-  amountOfPosts: 0,
+  amountOfPublishedPosts: 0,
+  amountOfUnpublishedPosts: 0,
   currentPost: null,
   created: false
 };
@@ -49,17 +54,36 @@ export default (state = initialState, action) => {
         posts: [...state.posts, action.payload].flat(Infinity)
       };
     }
-    case GET_USER_POSTS: {
+    case GET_USER_PUBLISHED_POSTS: {
       return {
         ...state,
-        userPosts: action.payload.posts,
-        amountOfPosts: action.payload.amountOfPosts
+        userPublishedPosts: action.payload.posts,
+        amountOfPublishedPosts: action.payload.amountOfPosts
       };
     }
-    case GET_MORE_USER_POSTS: {
+    case GET_USER_UNPUBLISHED_POSTS: {
       return {
         ...state,
-        userPosts: [...state.userPosts, ...action.payload.posts]
+        userUnpublishedPosts: action.payload.posts,
+        amountOfUnpublishedPosts: action.payload.amountOfPosts
+      };
+    }
+    case GET_MORE_USER_PUBLISHED_POSTS: {
+      return {
+        ...state,
+        userPublishedPosts: [
+          ...state.userPublishedPosts,
+          ...action.payload.posts
+        ]
+      };
+    }
+    case GET_MORE_USER_UNPUBLISHED_POSTS: {
+      return {
+        ...state,
+        userUnpublishedPosts: [
+          ...state.userUnpublishedPosts,
+          ...action.payload.posts
+        ]
       };
     }
     case GET_FILTERED_POSTS: {
@@ -94,11 +118,30 @@ export default (state = initialState, action) => {
         created: true
       };
     }
+
+    case 'PUBLISH_POST': {
+      return {
+        ...state,
+        userPublishedPosts: [...state.userPublishedPosts, action.payload],
+        userUnpublishedPosts: state.userUnpublishedPosts.filter(
+          post => post.id !== action.payload.id
+        )
+      };
+    }
+
+    // tutaj dodac delete post unpublished published
     case DELETE_POST: {
       return {
         ...state,
         posts: state.posts.filter(post => post.id !== action.payload),
         userPosts: state.userPosts.filter(post => post.id !== action.payload)
+      };
+    }
+    case CLEAR_ALL_USER_POSTS: {
+      return {
+        ...state,
+        userPublishedPosts: [],
+        userUnpublishedPosts: []
       };
     }
     case SET_POST: {

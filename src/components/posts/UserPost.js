@@ -1,18 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deletePost, setPost } from '../../actions/postActions';
+import { deletePost, setPost, publishPost } from '../../actions/postActions';
 import Spinner from '../layouts/Spinner';
 
 const UserPost = ({
   post,
   deletePost,
   setPost,
+  publishPost,
   loading: { loading, currentId },
   auth: { currentUser }
 }) => {
   const decodedThumbnail = 'data:image/jpeg;base64,' + post.encodedThumbnail;
-  const { title, body, createdAt, updatedAt, encodedThumbnail, id } = post;
+  const {
+    title,
+    body,
+    createdAt,
+    updatedAt,
+    encodedThumbnail,
+    id,
+    published
+  } = post;
   const { name } = post.category;
 
   if (loading && post.id === currentId) {
@@ -58,6 +67,15 @@ const UserPost = ({
             {currentUser !== null
               ? currentUser.id === post.user.id && (
                   <div className='d-flex justify-content-end'>
+                    {published === true ? (
+                      ''
+                    ) : (
+                      <i
+                        style={{ cursor: 'pointer', color: 'green' }}
+                        className='far fa-check-circle fa-2x mr-2'
+                        onClick={() => publishPost(post)}
+                      ></i>
+                    )}
                     <Link to='/editPost' onClick={() => setPost(post)}>
                       <i className='fas fa-edit fa-2x' />
                     </Link>
@@ -83,5 +101,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { deletePost, setPost }
+  { deletePost, setPost, publishPost }
 )(UserPost);

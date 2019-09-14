@@ -11,11 +11,11 @@ import Notification from './components/layouts/Notification';
 import Alert from './components/layouts/Alert';
 import PostForm from './components/posts/PostForm';
 import PrivateRoute from './components/routing/PrivateRoute';
-import UserPosts from './components/posts/UserPosts';
 import EditForm from './components/posts/EditForm';
 import UserProfile from './components/userProfile/UserProfile';
 import ShowUserProfile from './components/userProfile/ShowUserProfile';
 import ShowUserPosts from './components/userProfile/ShowUserPosts';
+import UserPostsChooser from './components/posts/Posts/UserPostsChooser';
 
 const App = () => {
   return (
@@ -31,7 +31,7 @@ const App = () => {
             <Route exact path='/login' component={Login} />
             <PrivateRoute exact path='/myProfile' component={UserProfile} />
             <PrivateRoute exact path='/createPost' component={PostForm} />
-            <PrivateRoute exact path='/myPosts' component={UserPosts} />
+            <PrivateRoute exact path='/myPosts' component={UserPostsChooser} />
             <PrivateRoute exact path='/editPost' component={EditForm} />
             <Route exact path='/posts/:id' component={Post} />
             <Route

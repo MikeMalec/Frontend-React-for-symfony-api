@@ -27,6 +27,7 @@ export const register = formData => async dispatch => {
     clearNotification(dispatch);
     unsetLoading(dispatch);
   } catch (error) {
+    console.log(error.response.data);
     dispatch({ type: SET_ALERT, payload: error.response.data.title });
     clearAlert(dispatch);
     unsetLoading(dispatch);

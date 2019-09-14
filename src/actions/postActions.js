@@ -11,9 +11,13 @@ import {
   GET_POSTS,
   GET_FILTERED_POSTS,
   GET_MORE_POSTS,
-  GET_MORE_USER_POSTS,
   GET_MORE_FILTERED_POSTS,
-  CLEAR_POSTS
+  CLEAR_POSTS,
+  GET_USER_PUBLISHED_POSTS,
+  GET_USER_UNPUBLISHED_POSTS,
+  GET_MORE_USER_UNPUBLISHED_POSTS,
+  GET_MORE_USER_PUBLISHED_POSTS,
+  PUBLISH_POST
 } from './types';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
@@ -69,33 +73,54 @@ export const getPost = id => async dispatch => {
     dispatch({ type: GET_POST, payload: res.data });
     unsetLoading(dispatch);
   } catch (error) {
+    console.log(error.response.data);
     unsetLoading(dispatch);
   }
 };
 
-export const getUserPosts = start => async dispatch => {
+export const getUserPublishedPosts = (start = 0) => async dispatch => {
   setLoading(dispatch);
   try {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
     const res = await axios.get(`/users/posts?start=${start}`);
-    dispatch({ type: GET_USER_POSTS, payload: res.data });
+    dispatch({ type: GET_USER_PUBLISHED_POSTS, payload: res.data });
     unsetLoading(dispatch);
-  } catch (error) {
-    dispatch({ type: SET_ALERT, payload: error.response.data.title });
-    clearAlert(dispatch);
-    unsetLoading(dispatch);
-  }
+  } catch (error) {}
 };
 
-export const getMoreUserPosts = start => async dispatch => {
+export const getUserUnpublishedPosts = (start = 0) => async dispatch => {
+  setLoading(dispatch);
+  try {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+    const res = await axios.get(`/users/posts?start=${start}&published=false`);
+    dispatch({ type: GET_USER_UNPUBLISHED_POSTS, payload: res.data });
+    unsetLoading(dispatch);
+  } catch (error) {}
+};
+
+export const getMoreUserPublishedPosts = start => async dispatch => {
   try {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
     const res = await axios.get(`/users/posts?start=${start}`);
-    dispatch({ type: GET_MORE_USER_POSTS, payload: res.data });
+    dispatch({ type: GET_MORE_USER_PUBLISHED_POSTS, payload: res.data });
+    unsetLoading(dispatch);
+  } catch (error) {}
+};
+
+export const getMoreUserUnpublishedPosts = start => async dispatch => {
+  try {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+    const res = await axios.get(`/users/posts?start=${start}&published=false`);
+    dispatch({ type: GET_MORE_USER_UNPUBLISHED_POSTS, payload: res.data });
+    unsetLoading(dispatch);
   } catch (error) {}
 };
 
@@ -136,6 +161,14 @@ export const updatePost = post => async dispatch => {
     clearAlert(dispatch);
     unsetLoading(dispatch);
   }
+};
+
+export const publishPost = post => {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
+  axios.patch(`/posts/${post.id}`, { publish: 'true' });
+  return { type: PUBLISH_POST, payload: post };
 };
 
 export const deletePost = post => async dispatch => {
